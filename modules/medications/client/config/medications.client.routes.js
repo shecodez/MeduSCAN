@@ -20,7 +20,7 @@
         controller: 'MedicationsListController',
         controllerAs: 'vm',
         data: {
-          //roles: ['teacher', 'admin'],
+          // roles: ['teacher', 'admin'],
           pageTitle: 'Medications List'
         }
       })
@@ -34,7 +34,7 @@
         },
         data: {
           roles: ['teacher', 'admin'],
-          pageTitle : 'Medications Create'
+          pageTitle: 'Medications Create'
         }
       })
       .state('medications.edit', {
@@ -58,7 +58,7 @@
         resolve: {
           medicationResolve: getMedication
         },
-        data:{
+        data: {
           pageTitle: 'Medication {{ articleResolve.name }}'
         }
       });

@@ -36,7 +36,7 @@ exports.read = function(req, res) {
 
   // Add a custom field to the Article, for determining if the current User is the "owner".
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
-  tutorial.isCurrentUserOwner = req.user && tutorial.user && tutorial.user._id.toString() === req.user._id.toString() ? true : false;
+  tutorial.isCurrentUserOwner = !!(req.user && tutorial.user && tutorial.user._id.toString() === req.user._id.toString());
 
   res.jsonp(tutorial);
 };
@@ -45,9 +45,9 @@ exports.read = function(req, res) {
  * Update a Tutorial
  */
 exports.update = function(req, res) {
-  var tutorial = req.tutorial ;
+  var tutorial = req.tutorial;
 
-  tutorial = _.extend(tutorial , req.body);
+  tutorial = _.extend(tutorial, req.body);
 
   tutorial.save(function(err) {
     if (err) {
@@ -64,7 +64,7 @@ exports.update = function(req, res) {
  * Delete an Tutorial
  */
 exports.delete = function(req, res) {
-  var tutorial = req.tutorial ;
+  var tutorial = req.tutorial;
 
   tutorial.remove(function(err) {
     if (err) {
@@ -80,7 +80,7 @@ exports.delete = function(req, res) {
 /**
  * List of Tutorials
  */
-exports.list = function(req, res) { 
+exports.list = function(req, res) {
   Tutorial.find().sort('-created').populate('user', 'displayName').exec(function(err, tutorials) {
     if (err) {
       return res.status(400).send({

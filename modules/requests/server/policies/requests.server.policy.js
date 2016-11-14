@@ -32,19 +32,13 @@ exports.invokeRolesPolicies = function () {
     }]
   }, {
     roles: ['student'],
-    allows: [/*{
-      resources: '/api/requests',
-      permissions: ['get']
-    },*/{
+    allows: [{
       resources: '/api/requests/:requestId',
       permissions: ['get', 'put']
     }]
   }, {
     roles: ['user'],
-    allows: [/*{
-     resources: '/api/requests',
-     permissions: ['get']
-     },*/{
+    allows: [{
       resources: '/api/requests/:requestId',
       permissions: ['get', 'put']
     }]

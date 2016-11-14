@@ -1,4 +1,4 @@
-//Courses service used to communicate Courses REST endpoints
+// Courses service used to communicate Courses REST endpoints
 (function () {
   'use strict';
 

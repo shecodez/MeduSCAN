@@ -1,15 +1,25 @@
 /**
- * Created by Nicole J. Nobles on 5/24/2016.
+ * Created by Nicole J. Nobles on 6/30/2016.
  */
 
-'use strict';
+(function () {
+  'use strict';
 
-angular.module('core').controller('TeachersController', ['$scope', 'Authentication',
-    function($scope, Authentication) {
-        // This provides Authentication context.
-        $scope.authentication = Authentication;
+  angular
+    .module('core')
+    .controller('TeachersController', TeachersController);
 
-        $scope.role = $scope.authentication.user.roles[0];
+  TeachersController.$inject = ['Authentication'];
 
+  function TeachersController(Authentication) {
+    var vm = this;
+    vm.authentication = Authentication;
+
+    function init() {
+      if (vm.authentication.user._id) {
+        vm.role = vm.authentication.user.roles[0];
+      }
     }
-]);
+    init();
+  }
+}());

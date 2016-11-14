@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Module dependencies.
+ * Module dependencies
  */
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema,
@@ -21,7 +21,7 @@ var validateLocalStrategyProperty = function (property) {
  * A Validation function for local strategy email
  */
 var validateLocalStrategyEmail = function (email) {
-  return ((this.provider !== 'local' && !this.updated) || validator.isEmail(email));
+  return ((this.provider !== 'local' && !this.updated) || validator.isEmail(email, { require_tld: false }));
 };
 
 /**
@@ -48,9 +48,6 @@ var UserSchema = new Schema({
     type: Boolean,
     default: false
   },
-  verifyEmailToken: {
-    type: String
-  },
 
   firstName: {
     type: String,
@@ -68,16 +65,17 @@ var UserSchema = new Schema({
     type: String,
     trim: true
   },
-
   email: {
     type: String,
-    unique: true,
+    index: {
+      unique: true,
+      sparse: true // For this to work on a previously indexed field, the index must be dropped & the application restarted.
+    },
     lowercase: true,
     trim: true,
     default: '',
     validate: [validateLocalStrategyEmail, 'Please fill a valid email address']
   },
-
   username: {
     type: String,
     unique: 'Username already exists',
@@ -85,7 +83,6 @@ var UserSchema = new Schema({
     lowercase: true,
     trim: true
   },
-
   password: {
     type: String,
     default: ''
@@ -93,7 +90,6 @@ var UserSchema = new Schema({
   salt: {
     type: String
   },
-
   profileImageURL: {
     type: String,
     default: 'modules/users/client/img/profile/default.png'
@@ -120,13 +116,13 @@ var UserSchema = new Schema({
     ref: 'Request'
   }],
 
-  institutions:[{
+  institutions: [{
     type: Schema.ObjectId,
     ref: 'Institution'
   }],
 
-  //TODO change to [MyCourseSchema] when key feature added
-  courses:[{
+  // TODO change to [MyCourseSchema] when key feature added
+  courses: [{
     type: Schema.ObjectId,
     ref: 'Course'
   }],
@@ -138,7 +134,6 @@ var UserSchema = new Schema({
     type: Date,
     default: Date.now
   },
-
   /* For reset password */
   resetPasswordToken: {
     type: String
@@ -216,7 +211,7 @@ UserSchema.statics.findUniqueUsername = function (username, suffix, callback) {
 };
 
 /**
-* Generates a random passphrase that passes the owasp test.
+* Generates a random passphrase that passes the owasp test
 * Returns a promise that resolves with the generated passphrase, or rejects with an error if something goes wrong.
 * NOTE: Passphrases are only tested against the required owasp strength tests, and not the optional tests.
 */
@@ -225,8 +220,8 @@ UserSchema.statics.generateRandomPassphrase = function () {
     var password = '';
     var repeatingCharacters = new RegExp('(.)\\1{2,}', 'g');
 
-    // iterate until the we have a valid passphrase. 
-    // NOTE: Should rarely iterate more than once, but we need this to ensure no repeating characters are present.
+    // iterate until the we have a valid passphrase
+    // NOTE: Should rarely iterate more than once, but we need this to ensure no repeating characters are present
     while (password.length < 20 || repeatingCharacters.test(password)) {
       // build the random password
       password = generatePassword.generate({
@@ -237,7 +232,7 @@ UserSchema.statics.generateRandomPassphrase = function () {
         excludeSimilarCharacters: true
       });
 
-      // check if we need to remove any repeating characters.
+      // check if we need to remove any repeating characters
       password = password.replace(repeatingCharacters, '');
     }
 

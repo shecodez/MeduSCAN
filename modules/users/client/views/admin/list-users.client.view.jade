@@ -9,12 +9,12 @@ section.container
     md-input-container.md-block
         label Search...
         md-icon.fa(md-font-icon='fa-search', alt='search').fa-2x
-        input(type='text', ng-model='search', ng-change='figureOutItemsToDisplay()')
+        input(type='text', ng-model='vm.search', ng-change='vm.figureOutItemsToDisplay()')
 
 
 
     .list-group
-        a.list-group-item(ng-repeat='user in pagedItems', ui-sref='admin.user({userId: user._id})')
+        a.list-group-item(ng-repeat='user in vm.pagedItems', ui-sref='admin.user({userId: user._id})')
             h4.list-group-item-heading(ng-bind='user.displayName')
             h5.text-center
                 span.primary {{user.courses.length}}
@@ -23,4 +23,4 @@ section.container
                 |  Institution(s) Listed
             strong: p.list-group-item-text.pull-right.small(ng-bind='user.roles')
             p.list-group-item-text.primary(ng-bind='user.email')
-    pagination(boundary-links='true', max-size='8', items-per-page='itemsPerPage', total-items='filterLength', ng-model='currentPage', ng-change='pageChanged()')
+    pagination(boundary-links='true', max-size='8', items-per-page='vm.itemsPerPage', total-items='vm.filterLength', ng-model='vm.currentPage', ng-change='vm.pageChanged()')

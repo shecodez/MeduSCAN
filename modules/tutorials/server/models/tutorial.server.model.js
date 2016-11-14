@@ -12,7 +12,7 @@ var mongoose = require('mongoose'),
 var TutorialSchema = new Schema({
   category: {
     type: String,
-    default:'Uncategorized',
+    default: 'Uncategorized',
     trim: true
   },
   title: {

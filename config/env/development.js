@@ -4,9 +4,8 @@ var defaultEnvConfig = require('./default');
 
 module.exports = {
   db: {
-    //uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/mean-dev',
-    //uri: 'mongodb://admin:pass@ds025239.mlab.com:25239/meduscan-db',
-    uri:'mongodb://admin:pass@ds017584.mlab.com:17584/meduscan',
+    // uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/mean-dev',
+    uri: 'mongodb://admin:pass@ds017584.mlab.com:17584/meduscan',
     options: {
       user: '',
       pass: ''
@@ -18,19 +17,12 @@ module.exports = {
     // logging with Morgan - https://github.com/expressjs/morgan
     // Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
     format: 'dev',
-    options: {
-      // Stream defaults to process.stdout
-      // Uncomment/comment to toggle the logging to a log on the file system
-      //stream: {
-      //  directoryPath: process.cwd(),
-      //  fileName: 'access.log',
-      //  rotatingLogs: { // for more info on rotating logs - https://github.com/holidayextras/file-stream-rotator#usage
-      //    active: false, // activate to use rotating logs 
-      //    fileName: 'access-%DATE%.log', // if rotating logs are active, this fileName setting will be used
-      //    frequency: 'daily',
-      //    verbose: false
-      //  }
-      //}
+    fileLogger: {
+      directoryPath: process.cwd(),
+      fileName: 'app.log',
+      maxsize: 10485760,
+      maxFiles: 2,
+      json: false
     }
   },
   app: {
@@ -79,9 +71,9 @@ module.exports = {
   },
   livereload: true,
   seedDB: {
-    seed: process.env.MONGO_SEED === 'true' ? true : false,
+    seed: process.env.MONGO_SEED === 'true',
     options: {
-      logResults: process.env.MONGO_SEED_LOG_RESULTS === 'false' ? false : true,
+      logResults: process.env.MONGO_SEED_LOG_RESULTS !== 'false',
       seedUser: {
         username: process.env.MONGO_SEED_USER_USERNAME || 'user',
         provider: 'local',

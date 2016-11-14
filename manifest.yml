@@ -4,10 +4,10 @@ declared-services:
     label: mongodb
     plan: 100
 applications:
-- name: mean
-  host: mean-${random-word}
+- name: meduscan
+  host: meduscan
   memory: 128M
   services:
-  - mean-mongo
+    - mean-mongo
   env:
     NODE_ENV: cloud-foundry

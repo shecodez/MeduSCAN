@@ -33,7 +33,7 @@
         },
         data: {
           roles: ['admin'],
-          pageTitle : 'Blogs Create'
+          pageTitle: 'Blogs Create'
         }
       })
       .state('blogs.edit', {
@@ -57,7 +57,7 @@
         resolve: {
           blogResolve: getBlog
         },
-        data:{
+        data: {
           pageTitle: 'Blog {{ articleResolve.name }}'
         }
       });

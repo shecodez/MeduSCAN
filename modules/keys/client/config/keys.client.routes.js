@@ -34,7 +34,7 @@
         },
         data: {
           roles: ['admin'],
-          pageTitle : 'Keys Create'
+          pageTitle: 'Keys Create'
         }
       })
       .state('keys.edit', {
@@ -58,7 +58,7 @@
         resolve: {
           keyResolve: getKey
         },
-        data:{
+        data: {
           roles: ['admin'],
           pageTitle: 'Key {{ articleResolve.name }}'
         }

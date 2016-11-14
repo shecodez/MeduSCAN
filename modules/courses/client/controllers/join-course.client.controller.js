@@ -3,15 +3,15 @@
  */
 
 (function () {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('courses')
-        .controller('JoinCourseController', JoinCourseController);
+  angular
+    .module('courses')
+    .controller('JoinCourseController', JoinCourseController);
 
-    JoinCourseController.$inject = [/*Example: '$scope', 'Authentication' */];
+  JoinCourseController.$inject = [/* Example: '$scope', 'Authentication' */];
 
-    function JoinCourseController(/*Example: $scope, Authentication */) {
-        //var vm = this;
-    }
+  function JoinCourseController(/* Example: $scope, Authentication */) {
+    // var vm = this;
+  }
 })();

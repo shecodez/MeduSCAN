@@ -36,7 +36,7 @@ exports.read = function(req, res) {
 
   // Add a custom field to the Article, for determining if the current User is the "owner".
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
-  blog.isCurrentUserOwner = req.user && blog.user && blog.user._id.toString() === req.user._id.toString() ? true : false;
+  blog.isCurrentUserOwner = !!(req.user && blog.user && blog.user._id.toString() === req.user._id.toString());
 
   res.jsonp(blog);
 };
@@ -45,9 +45,9 @@ exports.read = function(req, res) {
  * Update a Blog
  */
 exports.update = function(req, res) {
-  var blog = req.blog ;
+  var blog = req.blog;
 
-  blog = _.extend(blog , req.body);
+  blog = _.extend(blog, req.body);
 
   blog.save(function(err) {
     if (err) {
@@ -64,7 +64,7 @@ exports.update = function(req, res) {
  * Delete an Blog
  */
 exports.delete = function(req, res) {
-  var blog = req.blog ;
+  var blog = req.blog;
 
   blog.remove(function(err) {
     if (err) {
@@ -80,7 +80,7 @@ exports.delete = function(req, res) {
 /**
  * List of Blogs
  */
-exports.list = function(req, res) { 
+exports.list = function(req, res) {
   Blog.find().sort('-created').populate('user', 'displayName').exec(function(err, blogs) {
     if (err) {
       return res.status(400).send({

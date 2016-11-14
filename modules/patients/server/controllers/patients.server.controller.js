@@ -36,7 +36,7 @@ exports.read = function(req, res) {
 
   // Add a custom field to the Article, for determining if the current User is the "owner".
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
-  patient.isCurrentUserOwner = req.user && patient.user && patient.user._id.toString() === req.user._id.toString() ? true : false;
+  patient.isCurrentUserOwner = !!(req.user && patient.user && patient.user._id.toString() === req.user._id.toString());
 
   res.jsonp(patient);
 };
@@ -45,9 +45,9 @@ exports.read = function(req, res) {
  * Update a Patient
  */
 exports.update = function(req, res) {
-  var patient = req.patient ;
+  var patient = req.patient;
 
-  patient = _.extend(patient , req.body);
+  patient = _.extend(patient, req.body);
 
   patient.save(function(err) {
     if (err) {
@@ -64,7 +64,7 @@ exports.update = function(req, res) {
  * Delete an Patient
  */
 exports.delete = function(req, res) {
-  var patient = req.patient ;
+  var patient = req.patient;
 
   patient.remove(function(err) {
     if (err) {
@@ -80,8 +80,8 @@ exports.delete = function(req, res) {
 /**
  * List of Patients
  */
-exports.list = function(req, res) { 
-  Patient.find({'user':req.user}).sort('-created').populate('user', 'displayName').exec(function(err, patients) {
+exports.list = function(req, res) {
+  Patient.find({ 'user': req.user }).sort('-created').populate('user', 'displayName').exec(function(err, patients) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -113,14 +113,14 @@ exports.patientByID = function(req, res, next, id) {
       }
     })
     .exec(function (err, patient) {
-    if (err) {
-      return next(err);
-    } else if (!patient) {
-      return res.status(404).send({
-        message: 'No Patient with that identifier has been found'
-      });
-    }
-    req.patient = patient;
-    next();
-  });
+      if (err) {
+        return next(err);
+      } else if (!patient) {
+        return res.status(404).send({
+          message: 'No Patient with that identifier has been found'
+        });
+      }
+      req.patient = patient;
+      next();
+    });
 };

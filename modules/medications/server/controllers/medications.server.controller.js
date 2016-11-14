@@ -36,7 +36,7 @@ exports.read = function(req, res) {
 
   // Add a custom field to the Article, for determining if the current User is the "owner".
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
-  medication.isCurrentUserOwner = req.user && medication.user && medication.user._id.toString() === req.user._id.toString() ? true : false;
+  medication.isCurrentUserOwner = !!(req.user && medication.user && medication.user._id.toString() === req.user._id.toString());
 
   res.jsonp(medication);
 };
@@ -45,9 +45,9 @@ exports.read = function(req, res) {
  * Update a Medication
  */
 exports.update = function(req, res) {
-  var medication = req.medication ;
+  var medication = req.medication;
 
-  medication = _.extend(medication , req.body);
+  medication = _.extend(medication, req.body);
 
   medication.save(function(err) {
     if (err) {
@@ -64,7 +64,7 @@ exports.update = function(req, res) {
  * Delete an Medication
  */
 exports.delete = function(req, res) {
-  var medication = req.medication ;
+  var medication = req.medication;
 
   medication.remove(function(err) {
     if (err) {
@@ -80,8 +80,8 @@ exports.delete = function(req, res) {
 /**
  * List of Medications
  */
-exports.list = function(req, res) { 
-  Medication.find({'user':req.user}).sort('-created').populate('user', 'displayName').exec(function(err, medications) {
+exports.list = function(req, res) {
+  Medication.find({ 'user': req.user }).sort('-created').populate('user', 'displayName').exec(function(err, medications) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)

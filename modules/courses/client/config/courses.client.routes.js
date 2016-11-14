@@ -34,7 +34,7 @@
         },
         data: {
           roles: ['teacher', 'admin'],
-          pageTitle : 'Courses Create'
+          pageTitle: 'Courses Create'
         }
       })
       .state('courses.edit', {
@@ -58,7 +58,7 @@
         resolve: {
           courseResolve: getCourse
         },
-        data:{
+        data: {
           pageTitle: 'Course {{ articleResolve.name }}'
         }
       });

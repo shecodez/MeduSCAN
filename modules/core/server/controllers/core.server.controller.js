@@ -1,5 +1,6 @@
 'use strict';
 
+var validator = require('validator');
 var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport();
 
@@ -7,8 +8,29 @@ var transporter = nodemailer.createTransport();
  * Render the main application page
  */
 exports.renderIndex = function (req, res) {
+
+  var safeUserObject = null;
+  if (req.user) {
+    safeUserObject = {
+      _id: validator.escape(req.user.id),
+      displayName: validator.escape(req.user.displayName),
+      provider: validator.escape(req.user.provider),
+      username: validator.escape(req.user.username),
+      created: req.user.created.toString(),
+      roles: req.user.roles,
+      courses: req.user.courses,
+      institutions: req.user.institutions,
+      requests: req.user.requests,
+      profileImageURL: req.user.profileImageURL,
+      email: validator.escape(req.user.email),
+      lastName: validator.escape(req.user.lastName),
+      firstName: validator.escape(req.user.firstName),
+      additionalProvidersData: req.user.additionalProvidersData
+    };
+  }
+
   res.render('modules/core/server/views/index', {
-    user: req.user || null
+    user: safeUserObject
   });
 };
 
@@ -54,7 +76,7 @@ exports.sendMail = function(req, res) {
   transporter.sendMail({
     from: data.contactEmail,
     to: 'contact@meduscan.com',
-    subject: 'MeduSCAN Contact Form - '+ data.contactName,
+    subject: 'MeduSCAN Contact Form - ' + data.contactName,
     text: data.contactMsg
   });
 

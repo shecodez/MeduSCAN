@@ -1,10 +1,10 @@
 //
    Created by Nicole J. Nobles on 5/24/2016.
 
-section(data-ng-controller='StudentsController').container
+section(data-ng-controller='StudentsController as vm').container
 
     .text-center
-        h1(data-ng-if="role === 'student'") Go to&nbsp;
+        h1(data-ng-if="vm.role === 'student'") Go to&nbsp;
             a(href='/dashboard') Student Dashboard
 
     .col-md-6.col-md-offset-3

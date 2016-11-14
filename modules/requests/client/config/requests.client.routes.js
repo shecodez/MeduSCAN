@@ -15,8 +15,8 @@
         controller: 'RequestJoinController',
         controllerAs: 'vm',
         data: {
-          roles: ['user', 'student', 'teacher','admin'],
-          pageTitle : 'Request Join'
+          roles: ['user', 'student', 'teacher', 'admin'],
+          pageTitle: 'Request Join'
         }
       })
       .state('requests', {
@@ -42,8 +42,8 @@
           requestResolve: newRequest
         },
         data: {
-          roles: ['user', 'student', 'teacher','admin'],
-          pageTitle : 'Requests Create'
+          roles: ['user', 'student', 'teacher', 'admin'],
+          pageTitle: 'Requests Create'
         }
       })
       .state('requests.edit', {
@@ -55,7 +55,7 @@
           requestResolve: getRequest
         },
         data: {
-          roles: ['user', 'student', 'teacher','admin'],
+          roles: ['user', 'student', 'teacher', 'admin'],
           pageTitle: 'Edit Request {{ requestResolve.name }}'
         }
       })
@@ -67,7 +67,7 @@
         resolve: {
           requestResolve: getRequest
         },
-        data:{
+        data: {
           pageTitle: 'Request {{ articleResolve.name }}'
         }
       });

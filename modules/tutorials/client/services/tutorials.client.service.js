@@ -1,4 +1,4 @@
-//Tutorials service used to communicate Tutorials REST endpoints
+// Tutorials service used to communicate Tutorials REST endpoints
 (function () {
   'use strict';
 

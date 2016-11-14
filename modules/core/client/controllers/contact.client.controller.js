@@ -1,44 +1,51 @@
 /**
- * Created by Nicole J. Nobles on 5/23/2016.
+ * Created by Nicole J. Nobles on 6/30/2016.
  */
 
-'use strict';
+(function () {
+  'use strict';
 
-angular.module('core').controller('ContactController', ['$scope', '$http', 'toastService',
-    function($scope, $http, toastService) {
+  angular
+    .module('core')
+    .controller('ContactController', ContactController);
 
-        this.sendMail = function(form) {
+  ContactController.$inject = ['$scope', '$http', 'toastService'];
 
-            // Get the form data
-            var data = ({
-                contactName : this.contactName,
-                contactEmail : this.contactEmail,
-                contactMsg: this.contactMsg
-            });
+  function ContactController($scope, $http, toastService) {
+    // var vm = this;
 
-            // /contact POST request
-            $http({
-                method: 'POST',
-                url: '/contact',
-                data: data
-            }).then(
-                function successCallback(response) {
-                    toastService.simpleToast('Message sent. Thanks '+ response.data.contactName +'!');
-                },
-                function errorCallback(response) {
-            });
+    this.sendMail = function (form) {
 
-            //clear form
-            this.contactName = '';
-            this.contactEmail = '';
-            this.contactMsg = '';
-            $scope.resetForm(form);
+      // Get the form data
+      var data = ({
+        contactName: this.contactName,
+        contactEmail: this.contactEmail,
+        contactMsg: this.contactMsg
+      });
 
-        };
+      // Contact POST request
+      $http({
+        method: 'POST',
+        url: '/contact',
+        data: data
+      }).then(
+        function successCallback(response) {
+          toastService.simpleToast('Message sent. Thanks ' + response.data.contactName + '!');
+        },
+        function errorCallback(response) {
+        });
 
-        $scope.resetForm = function(form) {
-            form.$setPristine();
-            form.$setUntouched();
-        };
-    }
-]);
+      // Clear form
+      this.contactName = '';
+      this.contactEmail = '';
+      this.contactMsg = '';
+      $scope.resetForm(form);
+
+    };
+
+    $scope.resetForm = function (form) {
+      form.$setPristine();
+      form.$setUntouched();
+    };
+  }
+}());

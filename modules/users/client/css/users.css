@@ -157,6 +157,9 @@ body {
 .authForm md-card {
   padding: 0 !important;
 }
+.userForm md-card {
+  padding: 0 !important;
+}
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus {

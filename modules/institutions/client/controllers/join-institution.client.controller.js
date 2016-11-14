@@ -3,15 +3,15 @@
  */
 
 (function () {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('institutions')
-        .controller('JoinInstitutionController', JoinInstitutionController);
+  angular
+    .module('institutions')
+    .controller('JoinInstitutionController', JoinInstitutionController);
 
-    JoinInstitutionController.$inject = [/*Example: '$scope', 'Authentication' */];
+  JoinInstitutionController.$inject = [/* Example: '$scope', 'Authentication' */];
 
-    function JoinInstitutionController(/*Example: $scope, Authentication */) {
-        //var vm = this;
-    }
+  function JoinInstitutionController(/* Example: $scope, Authentication */) {
+    // var vm = this;
+  }
 })();

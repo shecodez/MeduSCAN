@@ -33,7 +33,7 @@
         },
         data: {
           roles: ['admin'],
-          pageTitle : 'Tutorials Create'
+          pageTitle: 'Tutorials Create'
         }
       })
       .state('tutorials.edit', {
@@ -57,7 +57,7 @@
         resolve: {
           tutorialResolve: getTutorial
         },
-        data:{
+        data: {
           pageTitle: 'Tutorial {{ articleResolve.name }}'
         }
       });

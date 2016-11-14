@@ -3,15 +3,15 @@
 
 section.container
     .page-header
-        h1(ng-bind='user.displayName')
+        h1(ng-bind='vm.user.displayName')
 
-        h3.text-left.col-xs-6(ng-if='user.verified').text-success Verified
-        h3.text-left.col-xs-6(ng-if='!user.verified').text-danger Unverified
+        h3.text-left.col-xs-6(ng-if='vm.user.verified').text-success Verified
+        h3.text-left.col-xs-6(ng-if='!vm.user.verified').text-danger Unverified
 
         h3.text-right.col-xs-6
-            a.btn.btn-warning(ui-sref='admin.user-edit({userId: user._id})')
+            a.btn.btn-warning(ui-sref='admin.user-edit({userId: vm.user._id})')
                 i.fa.fa-edit
-            a.btn.btn-danger(ng-click='remove();', ng-if='user._id !== authentication.user._id')
+            a.btn.btn-danger(ng-click='vm.remove();', ng-if='vm.user._id !== vm.authentication.user._id')
                 i.fa.fa-trash
 
     .col-md-12
@@ -19,45 +19,45 @@ section.container
         .row
             .col-md-3
                 strong First Name
-            .col-md-6(ng-bind='user.firstName')
+            .col-md-6(ng-bind='vm.user.firstName')
         hr
         .row
             .col-md-3
                 strong Last Name
-            .col-md-6(ng-bind='user.lastName')
+            .col-md-6(ng-bind='vm.user.lastName')
         hr
         .row
             .col-md-3
                 strong Username
-            .col-md-6(ng-bind='user.username')
+            .col-md-6(ng-bind='vm.user.username')
         hr
         .row
             .col-md-3
                 strong Email
-            a.col-md-6(ng-bind='user.email')
+            a.col-md-6(ng-bind='vm.user.email')
         hr
         .row
             .col-md-3
                 strong Courses
                 br
-                span: small.text-muted  {{user.courses.length}} Course(s) Listed
+                span: small.text-muted  {{vm.user.courses.length}} Course(s) Listed
             .col-md-6
-                p(ng-repeat='course in user.courses') {{course.name}}
+                p(ng-repeat='course in vm.user.courses') {{course.name}}
         hr
         .row
             .col-md-3
                 strong Institutions
                 br
-                span: small.text-muted {{user.institutions.length}} Institution(s) Listed
+                span: small.text-muted {{vm.user.institutions.length}} Institution(s) Listed
             .col-md-6
-                p(ng-repeat='institute in user.institutions') {{institute.name}}
+                p(ng-repeat='institute in vm.user.institutions') {{institute.name}}
         hr
         .row
             .col-md-3
                 strong Created
-            .col-md-6(ng-bind="user.created | date:'medium'")
+            .col-md-6(ng-bind="vm.user.created | date:'medium'")
         hr
         .row
             .col-md-3
                 strong Roles
-            .col-md-6(ng-bind='user.roles')
+            .col-md-6(ng-bind='vm.user.roles')

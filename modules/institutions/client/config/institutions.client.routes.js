@@ -33,7 +33,7 @@
         },
         data: {
           roles: ['admin'],
-          pageTitle : 'Institutions Create'
+          pageTitle: 'Institutions Create'
         }
       })
       .state('institutions.edit', {
@@ -57,7 +57,7 @@
         resolve: {
           institutionResolve: getInstitution
         },
-        data:{
+        data: {
           pageTitle: 'Institution {{ articleResolve.name }}'
         }
       });

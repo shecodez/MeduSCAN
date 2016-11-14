@@ -49,7 +49,7 @@ var InstitutionSchema = new Schema({
     state: { type: String, default: '', trim: true },
     zip: { type: String, default: '', trim: true }
   },
-  website:{
+  website: {
     type: String,
     default: '',
     trim: true
@@ -77,7 +77,7 @@ var InstitutionSchema = new Schema({
     default: Date.now
   },
 
-  /*admin*/
+  /* admin */
   user: {
     type: Schema.ObjectId,
     ref: 'User'

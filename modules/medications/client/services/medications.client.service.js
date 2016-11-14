@@ -1,4 +1,4 @@
-//Medications service used to communicate Medications REST endpoints
+// Medications service used to communicate Medications REST endpoints
 (function () {
   'use strict';
 

@@ -1,0 +1,54 @@
+//
+   Created by Nicole J. Nobles on 6/30/2016.
+
+div(data-ng-controller='HeaderController as vm', flex='')
+   md-toolbar
+      .container(layout='row', layout-align='space-around center')
+         md-button.md-icon-button(ng-click='vm.toggleMenu()', aria-label='Menu')
+            i.material-icons menu
+         h2.md-toolbar-tools
+            a(data-ui-sref='home') MeduSCAN
+         span(layout='row', ng-hide='vm.authentication.user', hide-xs='')
+            md-button(ui-sref='authentication.signup', aria-label='Sign Up') Sign Up
+            md-button(ui-sref='authentication.signin', aria-label='Sign In') Sign In
+         span(layout='row', ng-show='vm.authentication.user')
+            md-menu
+               md-button.md-icon-button(aria-label='Profile Button', ng-click='vm.openProfileMenu($mdOpenMenu, $event)')
+                  img.header-profile-image(ng-src='{{vm.authentication.user.profileImageURL}}', alt='{{vm.authentication.user.displayName}}')
+               md-menu-content
+                  md-subheader.md-no-sticky {{vm.authentication.user.email}}
+                  md-menu-item
+                     md-button(ui-sref='settings.profile', ui-sref-active='active')
+                        md-icon.md-default-theme.material-icons account_circle
+                        | Edit Profile
+                  md-menu-item(ui-sref='settings.picture', ui-sref-active='active')
+                     md-button
+                        md-icon.md-default-theme.material-icons camera
+                        | Change Profile Picture
+                  md-menu-item(ui-sref='settings.password', ui-sref-active='active')
+                     md-button
+                        md-icon.md-default-theme.material-icons lock
+                        | Change Password
+                  md-menu-item(ui-sref='settings.account', ui-sref-active='active')
+                     md-button
+                        md-icon.md-default-theme.material-icons web
+                        | Manage Account
+                  //
+                    <md-menu-item ui-sref="dashboard" ui-sref-active="active">
+                    <md-button ng-disabled="vm.role === 'user' || vm.role === 'guest'">
+                    <md-icon class="md-default-theme material-icons">dashboard</md-icon>
+                    Dashboard
+                    </md-button>
+                    </md-menu-item>
+                  md-menu-item(ui-sref='forums', ui-sref-active='active')
+                     md-button(ng-disabled='true')
+                        md-icon.md-default-theme.material-icons public
+                        | Community Forums
+                  md-menu-divider
+                  md-menu-item
+                     md-button
+                        md-icon.md-default-theme.material-icons exit_to_app
+                        a(href='/api/auth/signout', target='_self') Sign Out
+div(data-ng-controller='HeaderController as vm')
+   md-sidenav.md-sidenav-menu.md-whiteframe-z2(md-component-id='menu')
+      nav(data-ng-include="'/modules/core/client/views/partials/side-nav.client.view.html'", flex='', layout-fill='')

@@ -25,17 +25,14 @@ exports.invokeRolesPolicies = function () {
     roles: ['teacher'],
     allows: [{
       resources: '/api/institutions',
-      permissions: ['get'] //TODO: where teacher $in institution.teacher
+      permissions: ['get'] // TODO: where teacher $in institution.teacher
     }, {
       resources: '/api/institutions/:institutionId',
       permissions: ['get']
     }]
   }, {
     roles: ['user'],
-    allows: [/*{
-      resources: '/api/institutions',
-      permissions: ['get']
-    },*/{
+    allows: [{
       resources: '/api/institutions/:institutionId',
       permissions: ['get']
     }]

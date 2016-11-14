@@ -1,20 +1,20 @@
-//Requests service used to communicate Requests REST endpoints
+// Requests service used to communicate Requests REST endpoints
 (function () {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('requests')
-        .factory('RequestsService', RequestsService);
+  angular
+    .module('requests')
+    .factory('RequestsService', RequestsService);
 
-    RequestsService.$inject = ['$resource'];
+  RequestsService.$inject = ['$resource'];
 
-    function RequestsService($resource) {
-        return $resource('api/requests/:requestId', {
-            requestId: '@_id'
-        }, {
-            update: {
-                method: 'PUT'
-            }
-        });
-    }
+  function RequestsService($resource) {
+    return $resource('api/requests/:requestId', {
+      requestId: '@_id'
+    }, {
+      update: {
+        method: 'PUT'
+      }
+    });
+  }
 })();

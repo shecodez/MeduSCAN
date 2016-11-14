@@ -1,4 +1,4 @@
-//Blogs service used to communicate Blogs REST endpoints
+// Blogs service used to communicate Blogs REST endpoints
 (function () {
   'use strict';
 

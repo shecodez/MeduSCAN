@@ -71,7 +71,7 @@ var CourseSchema = new Schema({
     default: Date.now
   },
 
-  /*teacher*/
+  /* teacher */
   user: {
     type: Schema.ObjectId,
     ref: 'User'

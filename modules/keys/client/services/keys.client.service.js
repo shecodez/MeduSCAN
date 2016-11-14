@@ -1,4 +1,4 @@
-//Keys service used to communicate Keys REST endpoints
+// Keys service used to communicate Keys REST endpoints
 (function () {
   'use strict';
 

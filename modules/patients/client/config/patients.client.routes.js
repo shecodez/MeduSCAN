@@ -43,7 +43,7 @@
         },
         data: {
           roles: ['teacher', 'admin'],
-          pageTitle : 'Patients Create'
+          pageTitle: 'Patients Create'
         }
       })
       .state('patients.edit', {
@@ -93,7 +93,7 @@
         resolve: {
           patientResolve: getPatient
         },
-        data:{
+        data: {
           pageTitle: 'Patient {{ articleResolve.name }}'
         }
       });

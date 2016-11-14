@@ -10,7 +10,12 @@ var should = require('should'),
 /**
  * Globals
  */
-var app, agent, credentials, user, _user, admin;
+var app,
+  agent,
+  credentials,
+  user,
+  _user,
+  admin;
 
 /**
  * User routes tests
@@ -99,7 +104,7 @@ describe('User CRUD tests', function () {
 
             // NodeJS v4 changed the status code representation so we must check
             // before asserting, to be comptabile with all node versions.
-            if (process.version.indexOf('v4') === 0) {
+            if (process.version.indexOf('v4') === 0 || process.version.indexOf('v5') === 0) {
               signoutRes.text.should.equal('Found. Redirecting to /');
             } else {
               signoutRes.text.should.equal('Moved Temporarily. Redirecting to /');
@@ -254,7 +259,7 @@ describe('User CRUD tests', function () {
           }
 
           agent.delete('/api/users/' + user._id)
-            //.send(userUpdate)
+            // .send(userUpdate)
             .expect(200)
             .end(function (userInfoErr, userInfoRes) {
               if (userInfoErr) {

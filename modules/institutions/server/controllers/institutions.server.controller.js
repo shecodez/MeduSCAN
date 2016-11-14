@@ -36,7 +36,7 @@ exports.read = function(req, res) {
 
   // Add a custom field to the Article, for determining if the current User is the "owner".
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
-  institution.isCurrentUserOwner = req.user && institution.user && institution.user._id.toString() === req.user._id.toString() ? true : false;
+  institution.isCurrentUserOwner = !!(req.user && institution.user && institution.user._id.toString() === req.user._id.toString());
 
   res.jsonp(institution);
 };
@@ -45,9 +45,9 @@ exports.read = function(req, res) {
  * Update a Institution
  */
 exports.update = function(req, res) {
-  var institution = req.institution ;
+  var institution = req.institution;
 
-  institution = _.extend(institution , req.body);
+  institution = _.extend(institution, req.body);
 
   institution.save(function(err) {
     if (err) {
@@ -64,7 +64,7 @@ exports.update = function(req, res) {
  * Delete an Institution
  */
 exports.delete = function(req, res) {
-  var institution = req.institution ;
+  var institution = req.institution;
 
   institution.remove(function(err) {
     if (err) {
@@ -80,7 +80,7 @@ exports.delete = function(req, res) {
 /**
  * List of Institutions
  */
-exports.list = function(req, res) { 
+exports.list = function(req, res) {
   Institution.find().sort('-created').populate('user', 'displayName').exec(function(err, institutions) {
     if (err) {
       return res.status(400).send({
@@ -108,9 +108,9 @@ exports.institutionByID = function(req, res, next, id) {
       path: 'teachers',
       model: 'Teacher',
       populate: {
-       path: '_id',
-       model: 'User',
-       select: 'displayName email'
+        path: '_id',
+        model: 'User',
+        select: 'displayName email'
       }
     })
     .populate({
@@ -118,11 +118,11 @@ exports.institutionByID = function(req, res, next, id) {
       model: 'Request',
       select: 'subscribers',
       populate: {
-        path:'subscribers',
-        model:'User',
+        path: 'subscribers',
+        model: 'User',
         select: 'displayName email'
       }
-    }) //Trinh Hoang Nhu - SO
+    }) // Trinh Hoang Nhu - SO
     .exec(function (err, institution) {
       if (err) {
         return next(err);
@@ -131,7 +131,7 @@ exports.institutionByID = function(req, res, next, id) {
           message: 'No Institution with that identifier has been found'
         });
       }
-    req.institution = institution;
-    next();
-  });
+      req.institution = institution;
+      next();
+    });
 };

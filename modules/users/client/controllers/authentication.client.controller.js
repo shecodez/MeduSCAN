@@ -1,71 +1,81 @@
-'use strict';
+(function () {
+  'use strict';
 
-angular.module('users').controller('AuthenticationController', ['$scope', '$state', '$http', '$location', '$window', 'Authentication', 'PasswordValidator', 'toastService',
-  function ($scope, $state, $http, $location, $window, Authentication, PasswordValidator, toastService) {
-    $scope.authentication = Authentication;
-    $scope.popoverMsg = PasswordValidator.getPopoverMsg();
+  angular
+    .module('users')
+    .controller('AuthenticationController', AuthenticationController);
+
+  AuthenticationController.$inject = ['$scope', '$state', '$http', '$location', '$window', 'Authentication', 'PasswordValidator', 'toastService'];
+
+  function AuthenticationController($scope, $state, $http, $location, $window, Authentication, PasswordValidator, toastService) {
+    var vm = this;
+
+    vm.authentication = Authentication;
+    vm.getPopoverMsg = PasswordValidator.getPopoverMsg;
+    vm.signup = signup;
+    vm.signin = signin;
+    vm.callOauthProvider = callOauthProvider;
 
     // Get an eventual error defined in the URL query string:
-    $scope.error = $location.search().err;
+    vm.error = $location.search().err;
 
     // If user is signed in then redirect back home
-    if ($scope.authentication.user) {
+    if (vm.authentication.user) {
       $location.path('/');
     }
 
-    $scope.signUp = function (isValid) {
-      $scope.error = null;
+    function signup(isValid) {
+      vm.error = null;
 
       if (!isValid) {
-        $scope.$broadcast('show-errors-check-validity', 'userForm');
+        $scope.$broadcast('show-errors-check-validity', 'vm.signupForm');
 
         return false;
       }
 
-      $http.post('/api/auth/signup', $scope.credentials).success(function (response) {
+      $http.post('/api/auth/signup', vm.credentials).success(function (response) {
         // If successful we assign the response to the global user model
-        $scope.authentication.user = response;
+        vm.authentication.user = response;
 
-        toastService.simpleToast('Welcome to MeduSCAN '+response.firstName+'!');
+        toastService.simpleToast('Welcome to MeduSCAN ' + response.firstName + '!');
 
         // And redirect to the previous or home page
         $state.go($state.previous.state.name || 'home', $state.previous.params);
       }).error(function (response) {
-        $scope.error = response.message;
+        vm.error = response.message;
       });
-    };
+    }
 
-    $scope.signIn = function (isValid) {
-      $scope.error = null;
+    function signin(isValid) {
+      vm.error = null;
 
       if (!isValid) {
-        $scope.$broadcast('show-errors-check-validity', 'userForm');
+        $scope.$broadcast('show-errors-check-validity', 'vm.signinForm');
 
         return false;
       }
 
-      $http.post('/api/auth/signin', $scope.credentials).success(function (response) {
+      $http.post('/api/auth/signin', vm.credentials).success(function (response) {
         // If successful we assign the response to the global user model
-        $scope.authentication.user = response;
+        vm.authentication.user = response;
 
-        toastService.simpleToast('Welcome back, '+response.firstName+'!');
-        //console.log(response);
+        toastService.simpleToast('Welcome back, ' + response.firstName + '!');
 
         // And redirect to the previous or home page
         $state.go($state.previous.state.name || 'home', $state.previous.params);
       }).error(function (response) {
-        $scope.error = response.message;
+        vm.error = response.message;
       });
-    };
+    }
 
     // OAuth provider request
-    $scope.callOauthProvider = function (url) {
+    function callOauthProvider(url) {
       if ($state.previous && $state.previous.href) {
         url += '?redirect_to=' + encodeURIComponent($state.previous.href);
       }
 
       // Effectively call OAuth authentication route:
       $window.location.href = url;
-    };
+    }
   }
-]);
+}());

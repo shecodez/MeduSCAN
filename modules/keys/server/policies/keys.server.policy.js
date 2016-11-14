@@ -31,7 +31,7 @@ exports.isAllowed = function (req, res, next) {
   var roles = (req.user) ? req.user.roles : ['guest'];
 
   // If an Key is being processed and the current user created it then allow any manipulation
-  /*if (req.key && req.user && req.key.user && req.key.user.id === req.user.id) {
+  /* if (req.key && req.user && req.key.user && req.key.user.id === req.user.id) {
     return next();
   }*/
 

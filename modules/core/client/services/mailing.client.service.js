@@ -1,3 +1,7 @@
+/**
+ * Created by Nicole J. Nobles on 6/30/2016.
+ */
+
 (function () {
   'use strict';
 
@@ -5,9 +9,9 @@
     .module('core')
     .factory('mailingService', mailingService);
 
-  mailingService.$inject = [/*Example: '$state', '$window' */];
+  mailingService.$inject = [/* Example: '$state', '$window' */];
 
-  function mailingService(/*Example: $state, $window */) {
+  function mailingService(/* Example: $state, $window */) {
     // MailingService service logic
     // ...
 

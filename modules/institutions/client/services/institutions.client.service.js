@@ -1,4 +1,4 @@
-//Institutions service used to communicate Institutions REST endpoints
+// Institutions service used to communicate Institutions REST endpoints
 (function () {
   'use strict';
 

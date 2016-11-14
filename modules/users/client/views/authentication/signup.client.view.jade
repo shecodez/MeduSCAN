@@ -2,8 +2,8 @@
    Created by Nicole J. Nobles on 5/23/2016.
 
 
-div(ng-controller='AuthenticationController')
-    md-content.authForm(layout='row',  layout-align='center-center', layout-padding, ng-cloak)
+div
+    md-content.userForm(layout='row',  layout-align='center-center', layout-padding, ng-cloak)
         md-card(flex, flex-gt-sm='50', flex-gt-md='33')
             md-toolbar
                 .md-toolbar-tools
@@ -11,51 +11,51 @@ div(ng-controller='AuthenticationController')
 
             md-card-content
                 //h3.text-center Sign Up
-                form.signup(name='signUpStudentsForm', data-ng-submit='signUp(signUpStudentsForm.$valid)', novalidate, autocomplete)
+                form.signup(name='vm.signupForm', data-ng-submit='vm.signup(vm.signupForm.$valid)', novalidate, autocomplete)
                     br
-                    alert.text-center.text-danger(type='danger', ng-show='error')
-                        strong(ng-bind='error')
+                    alert.text-center.text-danger(type='danger', ng-show='vm.error')
+                        strong(ng-bind='vm.error')
 
                     md-input-container.md-block
                         label First Name
                         md-icon.fa(md-font-icon='fa-user', alt='user').fa-2x
-                        input(type ='text', name='firstName', data-ng-model='credentials.firstName', required)
-                        div(ng-messages='signUpStudentsForm.firstName.$error', role='alert')
+                        input(type ='text', name='firstName', data-ng-model='vm.credentials.firstName', required)
+                        div(ng-messages='vm.signupForm.firstName.$error', role='alert')
                             div(ng-message='required') First name is required.
 
                     md-input-container.md-block
                         label Last Name
                         md-icon.fa(md-font-icon='fa-user', alt='user').fa-2x
-                        input(name='lastName', data-ng-model='credentials.lastName', required)
-                        div(ng-messages='signUpStudentsForm.lastName.$error', role='alert')
+                        input(name='lastName', data-ng-model='vm.credentials.lastName', required)
+                        div(ng-messages='vm.signupForm.lastName.$error', role='alert')
                             div(ng-message='required') Last name is required.
 
                     md-input-container.md-block
                         label Email (academic)
                         md-icon.fa(md-font-icon='fa-envelope-o', alt='mail').fa-2x
-                        input(name='email', type='email', data-ng-model='credentials.email', lowercase, required)
-                        div(ng-messages='signUpStudentsForm.email.$error', role='alert')
+                        input(name='email', type='email', data-ng-model='vm.credentials.email', lowercase, required)
+                        div(ng-messages='vm.signupForm.email.$error', role='alert')
                             div(ng-message='required') Email address required.
                             div(ng-message='email') Email address invalid.
 
                     md-input-container.md-block
                         label Username
                         md-icon.fa(md-font-icon='fa-star', alt='star').fa-2x
-                        input(name='username', data-ng-model='credentials.username', lowercase, ng-minlength='5', required)
-                        div(ng-messages='signUpStudentsForm.username.$error', role='alert')
+                        input(name='username', data-ng-model='vm.credentials.username', lowercase, ng-minlength='5', required)
+                        div(ng-messages='vm.signupForm.username.$error', role='alert')
                             div(ng-message='required') Username is required.
                             div(ng-message='minlength') Username is too short.
 
                     md-input-container.md-block
                         label Password
                         md-icon.fa(md-font-icon='fa-lock', alt='lock').fa-2x
-                        input(name='password', type='password', data-ng-model='credentials.password', placeholder='Password', popover='{{popoverMsg}}', popover-trigger='focus', password-validator, required)
-                        div(ng-messages='signUpStudentsForm.password.$error', role='alert')
+                        input(name='password', type='password', data-ng-model='vm.credentials.password', placeholder='Password', popover='{{popoverMsg}}', popover-trigger='focus', password-validator, required)
+                        div(ng-messages='vm.signupForm.password.$error', role='alert')
                             div(ng-message='required') Password is required.
                             div(ng-repeat='passwordError in passwordErrors')
-                                div(ng-show='signUpStudentsForm.password.$error.requirements') {{passwordError}}
+                                div(ng-show='vm.signupForm.password.$error.requirements') {{passwordError}}
 
-                    .form-group(ng-show='!signUpStudentsForm.password.$error.required')
+                    .form-group(ng-show='!vm.signupForm.password.$error.required')
                         label Password Requirements
                         uib-progressbar(value='requirementsProgress', type='{{requirementsColor}}')
                             span(style='color:white; white-space:nowrap;') {{requirementsProgress}}%

@@ -8,34 +8,34 @@ section
                 .md-toolbar-tools
                     h2
                         | User :&nbsp;
-                        span(ng-bind='user.username')
+                        span(ng-bind='vm.user.username')
 
             md-card-content
                 //h3.text-center Sign In
-                form(name='userForm', data-ng-submit='update(userForm.$valid)', novalidate)
+                form(name='vm.userForm', data-ng-submit='vm.update(vm.userForm.$valid)', novalidate)
                     br
-                    alert.text-center.text-danger(type='danger', ng-show='error')
-                        span(ng-bind='error')
+                    alert.text-center.text-danger(type='danger', ng-show='vm.error')
+                        span(ng-bind='vm.error')
 
                     md-input-container.md-block
                         label First Name
-                        input(name='firstName', ng-model='user.firstName', required)
-                        div(ng-messages='userForm.firstName.$error', role='alert')
+                        input(name='firstName', ng-model='vm.user.firstName', required)
+                        div(ng-messages='vm.userForm.firstName.$error', role='alert')
                             div(ng-message='required') First name is required.
 
                     md-input-container.md-block
                         label Last Name
-                        input(name='lastName', ng-model='user.lastName', required)
-                        div(ng-messages='userForm.lastName.$error', role='alert')
+                        input(name='lastName', ng-model='vm.user.lastName', required)
+                        div(ng-messages='vm.userForm.lastName.$error', role='alert')
                             div(ng-message='required') Last name is required.
 
                     md-input-container.md-block
                         label Roles
-                        input(name='roles', data-ng-model='user.roles', required)
-                        div(ng-messages='userForm.roles.$error', role='alert')
+                        input(name='roles', data-ng-model='vm.user.roles', required)
+                        div(ng-messages='vm.userForm.roles.$error', role='alert')
                             div(ng-message='required') At least one role is required.
 
                     br
                     div(layout='column')
-                        md-button.md-raised.md-primary(type='submit' flex) Update
+                        md-button.md-raised.md-primary(type='submit') Update
 

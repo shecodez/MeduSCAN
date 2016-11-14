@@ -1,69 +1,67 @@
 (function () {
-    'use strict';
+  'use strict';
 
-    // Header controller
-    angular
-        .module('core')
-        .controller('HeaderController', HeaderController);
+  angular
+    .module('core')
+    .controller('HeaderController', HeaderController);
 
-    HeaderController.$inject = ['Authentication', '$mdSidenav', '$mdDialog'];
+  HeaderController.$inject = ['$scope', '$state', 'Authentication', 'menuService', '$mdSidenav', '$mdDialog'];
 
-    function HeaderController(Authentication, $mdSidenav, $mdDialog) {
-        var vm = this;
-        vm.authentication = Authentication;
-        vm.user = vm.authentication.user;
+  function HeaderController($scope, $state, Authentication, menuService, $mdSidenav, $mdDialog) {
+    var vm = this;
 
-        if(vm.authentication.user._id) {
-            vm.role = vm.authentication.user.roles[0];
-        }
+    vm.accountMenu = menuService.getMenu('account').items[0];
+    vm.authentication = Authentication;
+    vm.isCollapsed = false;
+    vm.menu = menuService.getMenu('topbar');
 
-        // menuLinks
-        vm.menuLinks = [];
+    // TODO Move to menuService
+    vm.coreLinks = [
+      { icon: 'home', label: 'Home', goTo: 'home' },
+      { icon: 'group', label: 'About Us', goTo: 'about' },
+      { icon: 'important_devices', label: 'Getting Started', goTo: 'getting_started' },
+      { icon: 'account_balance', label: 'Teachers', goTo: 'teachers' },
+      { icon: 'school', label: 'Students', goTo: 'students' },
+      { icon: 'view_day', label: 'Blogs', goTo: 'blogs.list' },
+      { icon: 'desktop_mac', label: 'Tutorials', goTo: 'tutorials.list' },
+      { icon: 'send', label: 'Contact Us', goTo: 'contact' }
+    ];
 
-        vm.coreLinks = [
-            {icon: 'home',      label: 'Home',             goTo: 'home'},
-            {icon: 'group',     label: 'About Us',         goTo: 'about'},
-            {icon: 'important_devices', label: 'Getting Started',  goTo: 'getting_started'},
-            {icon: 'account_balance',   label: 'Teachers',         goTo: 'teachers'},
-            {icon: 'school',        label: 'Students',     goTo: 'students'},
-            {icon: 'view_day',      label: 'Blogs',        goTo: 'blogs.list'},
-            {icon: 'desktop_mac',   label: 'Tutorials',    goTo: 'tutorials.list'},
-            {icon: 'send',          label: 'Contact Us',   goTo: 'contact'}
-        ];
+    // ---- Open legal dialog -----------------------------------
+    vm.openLegalDialog = function () {
+      $mdDialog.show({
+        templateUrl: 'modules/core/client/views/dialogs/legal.client.dialog.html',
+        controller: function ($scope, $mdDialog) {
 
-        // Get the topbar menu
-        //$scope.menu = Menus.getMenu('topbar');
+          $scope.cancel = function () {
+            $mdDialog.cancel();
+          };
+        },
+        parent: angular.element(document.body)
+      });
+    };
 
-        // ---- Open legal dialog -----------------------------------
-        vm.openLegalDialog = function () {
-            $mdDialog.show({
-                templateUrl: 'modules/core/client/views/dialogs/legal.client.dialog.html',
-                controller: function ($scope, $mdDialog) {
+    // ---- Open profile dropdown -------------------------------
+    var originatorEv;
+    this.openProfileMenu = function ($mdOpenMenu, ev) {
+      originatorEv = ev;
+      $mdOpenMenu(ev);
+    };
 
-                    $scope.cancel = function () {
-                        $mdDialog.cancel();
-                    };
-                },
-                parent: angular.element(document.body)
-            });
-        };
+    // ---- Toggle Menu & Close ---------------------------------
 
-        // ---- Open profile dropdown -------------------------------
-        var originatorEv;
-        this.openProfileMenu = function($mdOpenMenu, ev) {
-            originatorEv = ev;
-            $mdOpenMenu(ev);
-        };
+    vm.toggleMenu = function () {
+      $mdSidenav('menu').toggle();
+    };
+    vm.close = function () {
+      $mdSidenav('menu').close();
+    };
 
-        // ---- Toggle Menu & Close ---------------------------------
+    $scope.$on('$stateChangeSuccess', stateChangeSuccess);
 
-        vm.toggleMenu = function() {
-            $mdSidenav('menu').toggle();
-        };
-        vm.close = function() {
-            $mdSidenav('menu').close();
-        };
-
+    function stateChangeSuccess() {
+      // Collapsing the menu after navigation
+      vm.isCollapsed = false;
     }
-})();
-
+  }
+}());

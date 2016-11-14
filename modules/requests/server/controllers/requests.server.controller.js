@@ -36,7 +36,7 @@ exports.read = function(req, res) {
 
   // Add a custom field to the Article, for determining if the current User is the "owner".
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
-  request.isCurrentUserOwner = req.user && request.user && request.user._id.toString() === req.user._id.toString() ? true : false;
+  request.isCurrentUserOwner = !!(req.user && request.user && request.user._id.toString() === req.user._id.toString());
 
   res.jsonp(request);
 };
@@ -45,9 +45,9 @@ exports.read = function(req, res) {
  * Update a Request
  */
 exports.update = function(req, res) {
-  var request = req.request ;
+  var request = req.request;
 
-  request = _.extend(request , req.body);
+  request = _.extend(request, req.body);
 
   request.save(function(err) {
     if (err) {
@@ -64,7 +64,7 @@ exports.update = function(req, res) {
  * Delete an Request
  */
 exports.delete = function(req, res) {
-  var request = req.request ;
+  var request = req.request;
 
   request.remove(function(err) {
     if (err) {
@@ -80,7 +80,7 @@ exports.delete = function(req, res) {
 /**
  * List of Requests
  */
-exports.list = function(req, res) { 
+exports.list = function(req, res) {
   Request.find().sort('-created').populate('user', 'displayName').exec(function(err, requests) {
     if (err) {
       return res.status(400).send({

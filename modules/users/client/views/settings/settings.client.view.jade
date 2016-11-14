@@ -1,7 +1,7 @@
 //
    Created by Nicole J. Nobles on 6/1/2016.
 
-section(ng-controller='SettingsController').container
+section.container
     .page-header
         h1 Settings
 
@@ -11,7 +11,7 @@ section(ng-controller='SettingsController').container
                 a(ui-sref='settings.profile') Edit Profile
             li(ui-sref-active='active')
                 a(ui-sref='settings.picture') Change Profile Picture
-            li(ui-sref-active='active', ng-show="user.provider === 'local'")
+            li(ui-sref-active='active', ng-show="vm.user.provider === 'local'")
                 a(ui-sref='settings.password') Change Password
             li(ui-sref-active='active')
                 a(ui-sref='settings.account') Manage Account

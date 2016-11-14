@@ -6,7 +6,7 @@
     var $scope,
       TutorialsService;
 
-    //We can start by loading the main application module
+    // We can start by loading the main application module
     beforeEach(module(ApplicationConfiguration.applicationModuleName));
 
     // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
@@ -53,7 +53,7 @@
             name: 'Tutorial Name'
           });
 
-          //Initialize Controller
+          // Initialize Controller
           TutorialsController = $controller('TutorialsController as vm', {
             $scope: $scope,
             tutorialResolve: mockTutorial
@@ -100,7 +100,7 @@
           // create mock Tutorial
           mockTutorial = new TutorialsService();
 
-          //Initialize Controller
+          // Initialize Controller
           TutorialsController = $controller('TutorialsController as vm', {
             $scope: $scope,
             tutorialResolve: mockTutorial
@@ -149,7 +149,7 @@
             name: 'Tutorial Name'
           });
 
-          //Initialize Controller
+          // Initialize Controller
           TutorialsController = $controller('TutorialsController as vm', {
             $scope: $scope,
             tutorialResolve: mockTutorial

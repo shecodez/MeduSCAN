@@ -53,7 +53,7 @@ exports.read = function(req, res) {
 
   // Add a custom field to the Article, for determining if the current User is the "owner".
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
-  course.isCurrentUserOwner = req.user && course.user && course.user._id.toString() === req.user._id.toString() ? true : false;
+  course.isCurrentUserOwner = !!(req.user && course.user && course.user._id.toString() === req.user._id.toString());
 
   res.jsonp(course);
 };
@@ -62,9 +62,9 @@ exports.read = function(req, res) {
  * Update a Course
  */
 exports.update = function(req, res) {
-  var course = req.course ;
+  var course = req.course;
 
-  course = _.extend(course , req.body);
+  course = _.extend(course, req.body);
 
   course.save(function(err) {
     if (err) {
@@ -81,7 +81,7 @@ exports.update = function(req, res) {
  * Delete an Course
  */
 exports.delete = function(req, res) {
-  var course = req.course ;
+  var course = req.course;
 
   course.remove(function(err) {
     if (err) {
@@ -97,8 +97,8 @@ exports.delete = function(req, res) {
 /**
  * List of Courses
  */
-exports.list = function(req, res) { 
-  Course.find({'user':req.user}).sort('-created').populate('user', 'displayName').exec(function(err, courses) {
+exports.list = function(req, res) {
+  Course.find({ 'user': req.user }).sort('-created').populate('user', 'displayName').exec(function(err, courses) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -138,22 +138,22 @@ exports.courseByID = function(req, res, next, id) {
     .populate({
       path: 'request',
       model: 'Request',
-      select:'subscribers',
+      select: 'subscribers',
       populate: {
-        path:'subscribers',
-        model:'User',
-        select:'displayName email'
+        path: 'subscribers',
+        model: 'User',
+        select: 'displayName email'
       }
     })
     .exec(function (err, course) {
-    if (err) {
-      return next(err);
-    } else if (!course) {
-      return res.status(404).send({
-        message: 'No Course with that identifier has been found'
-      });
-    }
-    req.course = course;
-    next();
-  });
+      if (err) {
+        return next(err);
+      } else if (!course) {
+        return res.status(404).send({
+          message: 'No Course with that identifier has been found'
+        });
+      }
+      req.course = course;
+      next();
+    });
 };

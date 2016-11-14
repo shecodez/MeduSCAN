@@ -1,50 +1,50 @@
-'use strict';
+(function () {
+  'use strict';
 
-angular.module('users.admin').controller('UserController', ['$scope', '$state', 'Authentication', 'userResolve',
-  function ($scope, $state, Authentication, userResolve) {
-    $scope.authentication = Authentication;
-    $scope.user = userResolve;
+  angular
+    .module('users.admin')
+    .controller('UserController', UserController);
 
-    // List user role options
-    $scope.roleOpts = [
-      {ID: 1, label: 'Admin', value: 'admin'},
-      {ID: 2, label: 'Student', value: 'student'},
-      {ID: 3, label: 'Teacher', value: 'teacher'},
-      {ID: 4, label: 'User', value: 'user'}
-    ];
+  UserController.$inject = ['$scope', '$state', '$window', 'Authentication', 'userResolve'];
 
-    //console.log($scope.user);
+  function UserController($scope, $state, $window, Authentication, user) {
+    var vm = this;
 
-    $scope.remove = function (user) {
-      if (confirm('Are you sure you want to delete this user?')) {
+    vm.authentication = Authentication;
+    vm.user = user;
+    vm.remove = remove;
+    vm.update = update;
+
+    function remove(user) {
+      if ($window.confirm('Are you sure you want to delete this user?')) {
         if (user) {
           user.$remove();
 
-          $scope.users.splice($scope.users.indexOf(user), 1);
+          vm.users.splice(vm.users.indexOf(user), 1);
         } else {
-          $scope.user.$remove(function () {
+          vm.user.$remove(function () {
             $state.go('admin.users');
           });
         }
       }
-    };
+    }
 
-    $scope.update = function (isValid) {
+    function update(isValid) {
       if (!isValid) {
-        $scope.$broadcast('show-errors-check-validity', 'userForm');
+        $scope.$broadcast('show-errors-check-validity', 'vm.userForm');
 
         return false;
       }
 
-      var user = $scope.user;
+      var user = vm.user;
 
       user.$update(function () {
         $state.go('admin.user', {
           userId: user._id
         });
       }, function (errorResponse) {
-        $scope.error = errorResponse.data.message;
+        vm.error = errorResponse.data.message;
       });
-    };
+    }
   }
-]);
+}());

@@ -1,4 +1,4 @@
-//Patients service used to communicate Patients REST endpoints
+// Patients service used to communicate Patients REST endpoints
 (function () {
   'use strict';
 
