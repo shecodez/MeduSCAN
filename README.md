@@ -1,2 +1,3 @@
-# MeduSCAN
-Barcode Medication Administration (BCMA) training Web App
+#MeduSCAN
+
+A Barcode Medication Administration (BCMA) training software.
