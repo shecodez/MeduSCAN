@@ -1,0 +1,33 @@
+//
+   Created by Nicole J. Nobles on 5/22/2016.
+
+section(data-ng-controller='AboutController')
+    .container
+        .mtb-15p
+            h1.text-center.mb-50 About Us
+
+            div(layout='row', layout-xs='column', layout-padding)
+                div(flex)
+                    p.text-justify
+                        | MeduSCAN is a Barcode Medication Administration (BCMA) training software
+                        | designed to provide nursing students with a more realistic
+                        | approach to managing and caring for patients in healthcare settings.
+                div(flex)
+                    p.text-justify
+                        | BCMA is a barcode system designed to prevent medication errors and improve the
+                        | quality and safety of medication administration by verifying the "5 rights of patient care":
+                        | right patient, right drug, right dose, right route, and right time.
+
+
+            //TODO: Add after we have actual testimonials
+            //data-owl-carousel.owl-carousel.testimonials(data-options='{autoPlay: 10000, stopOnHover: true, navigation: false, pagination: true, singleItem : true}')
+                .item(owl-carousel-item='', ng-repeat='testimonial in testimonials')
+                    .testimonial-body
+                        i.fa.fa-quote-left.fa-2x.primary
+                        blockquote
+                            p.text-center {{testimonial.blockQuote}}
+                            footer.text-right
+                                //img.img-50.img-circle(src='modules/core/client/img/testimonials/fm_img_placeholder.png', alt='t1-img', title='testimonialImg1')
+                                span {{testimonial.name}}
+                                    cite: strong  {{testimonial.company}}
+

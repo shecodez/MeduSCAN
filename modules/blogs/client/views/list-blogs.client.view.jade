@@ -1,0 +1,31 @@
+//
+   Created by Nicole J. Nobles on 6/8/2016.
+
+section.container
+    .page-header
+        h1 Blogs
+
+    //TODO change this to md-cards
+    .list-group
+        .list-group-item(data-ng-repeat='blog in vm.blogs')
+            small: strong.text-uppercase {{blog.category}}
+            h3: a(data-ui-sref='blogs.view({ blogId: blog._id })') {{blog.title}}
+            br
+            p {{blog.content | limitTo: 512}}...
+            br
+            p: h5.text-muted
+                span(data-ng-if='blog.user', data-ng-bind='blog.user.displayName')
+                span(data-ng-if='!blog.user') Deleted User
+                span.mr-5(data-ng-bind='blog.tags')
+                |  |&nbsp;
+                span.mr-5(data-ng-bind="blog.created | date:'short'")
+
+            //md-button.md-raised.md-primary(data-ng-href='/#!/blogs/{{blog._id}}') Read More
+
+    //.alert.alert-warning.text-center(data-ng-if='vm.blogs.$resolved && !vm.blogs.length')
+       | No Blogs yet, why don't you
+       a(data-ui-sref='blogs.create')  create one
+       | ?
+
+    .alert.alert-warning.text-center(data-ng-if='vm.blogs.$resolved && !vm.blogs.length')
+        h2 New Blogs Coming Soon...

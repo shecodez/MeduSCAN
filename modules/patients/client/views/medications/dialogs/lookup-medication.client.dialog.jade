@@ -1,0 +1,34 @@
+//
+   Created by Nicole J. Nobles on 6/21/2016.
+
+md-dialog(aria-label='Lookup Medication', flex='80', flex-gt-sm='50', flex-gt-md='40')
+    md-content
+        md-toolbar
+            .md-toolbar-tools
+                h2 Lookup Medication
+                span(flex='')
+                md-button.md-icon-button(ng-click='vm.closeDialogLookupMed()', aria-label='Close dialog')
+                    md-icon.md-default-theme.material-icons close
+
+        md-dialog-content
+            .md-dialog-content
+                form(name='lookUpForm',  novalidate, autocomplete='off')
+                    br
+                    alert.text-center.text-danger(type='danger', ng-show='vm.error')
+                        strong(ng-bind='vm.error')
+                    h4.text-center Scan the medication barcode to begin.
+                    br
+                    md-input-container.md-block
+                        label Medication ID
+                        input(name='mID', ng-model='vm.mID', required, lowercase, md-maxlength='24', minlength='24')
+                        div(ng-messages='lookUpForm.mID.$error', role='alert')
+                            div(ng-message='required') Medication ID is required.
+                            div(ng-message='md-maxlength') Medication ID is too long.
+                            div(ng-message='minlength') Medication ID is too short.
+                    br
+                    //.text-center
+                        md-button.md-raised.md-primary(type='submit') Continue
+
+        md-dialog-actions(layout='row')
+            md-button(ng-click='vm.okDialogLookupMed(vm.mID)', ng-disabled='lookUpForm.$invalid') Continue
+            md-button(ng-click='vm.closeDialogLookupMed()', style='margin-right:20px;') Cancel

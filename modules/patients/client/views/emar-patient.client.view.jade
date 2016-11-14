@@ -1,0 +1,133 @@
+//
+   Created by Nicole J. Nobles on 6/25/2016.
+
+section.container.mt-50
+    div(layout='row')
+        div(flex='33')
+            .well(layout-padding)
+                .bg-white
+                    h4 {{vm.patient.lastName}}, {{vm.patient.firstName}}
+                    p DOB:&nbsp;
+                        span(data-ng-bind="vm.patient.dob | date:'mediumDate'")
+                    p {{vm.calcAge(vm.patient.dob)}}Y/{{vm.patient.gender}}&nbsp;
+                        span(ng-if='vm.patient.pregnant') Pregnant
+
+        div(flex='33').text-center
+            label.control-label(for='scenarioTime') Scenario Time
+            br
+            h1 {{vm.patient.scenarioTime | date:'HH:mm'}}
+
+        div(flex='33')
+            div(layout='column')
+                md-button.md-raised.md-primary.mt-25(print-btn) Print "{{vm.patient.firstName}} {{vm.patient.lastName}}" EMAR
+                md-input-container.md-block
+                    label Search...
+                    md-icon.material-icons search
+                    input(name='search', data-ng-model='vm.search')
+
+    div(layout='row')
+        div(flex, layout-margin)
+            md-input-container.md-block(style='margin: 26px 0;')
+                label(ng-show='!vm.patient.alert.allergy') Allergies: NKDA
+                label(ng-show= 'vm.patient.alert.allergy')
+                    span.red Allergies
+                    |  : {{vm.patient.alert.allergyDetails}}
+                input(disabled)
+
+        div(flex, layout-margin)
+            form(name='vm.form.meduScanForm', data-ng-submit='vm.verify5Rights(vm.form.meduScanForm.$valid)', novalidate='true', autocomplete='off')
+                div(layout='row', layout-align='center center')
+                    md-input-container(flex)
+                        label Scan ID
+                        input(name='mID', data-ng-model='vm.scan', required, lowercase, md-maxlength='24', minlength='24')
+                        div(ng-messages='vm.form.meduScanForm.mID.$error', role='alert')
+                            div(ng-message='required') ID is required.
+                            div(ng-message='md-maxlength') ID is too long.
+                            div(ng-message='minlength') ID is too short.
+                    md-button.md-icon-button(type='submit', aria-label='Scan Medication', ng-class="{'md-raised md-accent': (vm.form.meduScanForm.$dirty && vm.form.meduScanForm.$valid)}")
+                        md-tooltip(md-direction='top') Submit Medication ID
+                        md-icon.material-icons check
+
+    div(flex)
+        md-content(flex)
+            // style='min-height: 450px'
+            md-tabs(md-dynamic-height='true', md-border-bottom='true',print-section )
+                md-tab(label='Patient Medications')
+                    md-content.md-padding
+                        table.table.table-striped.table-hover
+                            thead
+                                tr
+                                    th Given
+                                    th Medication
+                                    th Dose
+                                    th Amount
+                                    th Route
+                                    th Frequency
+                                    th Time
+                                    th Time Given
+                                    th Directions
+                                    th Schedule
+
+                            tbody
+                                tr(ng-repeat='pm in vm.patientMedications | filter:vm.search')
+                                    td: h5: md-checkbox(aria-label='Given', data-ng-checked='pm.given')
+                                    td: h5 {{pm._id.name}}
+                                        span: small  {{pm._id.type}}
+                                        h5: a(ng-if='pm._id.description', href='', title='{{pm._id.description}}') Medication Description
+                                    td: h5 {{pm.dose}} {{pm._id.unit}}
+                                    td: h5 {{vm.calcAmt(pm._id.strength, pm.dose, pm._id.amount)}} {{pm._id.form}}
+                                    td: h5 {{pm.route}}
+                                    td: h5 {{pm.frequency}}
+                                    td: h5 {{pm.time | date: 'HH:mm'}}
+                                    td: h5: p(ng-if='pm.given && !pm.givenTime') {{pm.time | date: 'HH:mm'}}
+                                        p(ng-if='pm.givenTime') {{pm.givenTime | date: 'HH:mm'}}
+                                    td: h5: a(ng-if='pm.directions', href='', title='{{pm.directions}}') Directions
+                                    td: h5 {{pm.schedule}}
+
+                md-tab(label='Patient Details')
+                    md-content.md-padding
+                        .text-center
+                            h2 Details: {{vm.patient.lastName}}, {{vm.patient.firstName}} ID :
+                                span.primary   {{vm.patient._id}}
+                        br
+                        div(layout='row').text-center
+                            div(flex)
+                                h4 Height : {{vm.patient.height}} CM - {{vm.calcFt(vm.patient.height)}}
+                            div(flex)
+                                h4 Weight : {{vm.patient.weight}} KG - {{vm.calcLb(vm.patient.weight)}} LBs
+                            div(flex)
+                                h4 BMI : {{vm.calcBMI(vm.patient.weight, vm.patient.height)}} / {{vm.textBMI(vm.bmi)}}
+
+                        br
+                        div(layout='row', layout-wrap flex)
+                            md-checkbox.red(flex='15', ng-model='vm.patient.alert.allergy', aria-label='Allergy', ng-click='vm.patient.alert.allergyDetails = null')
+                                | Allergy
+                            md-checkbox.green(flex='15', ng-model='vm.patient.alert.latexAllergy', aria-label='Latex Allergy')
+                                | Latex Allergy
+                            md-checkbox.purple(flex='15', ng-model='vm.patient.alert.dnr', aria-label='DNR')
+                                abbr.initialism(title='Do Not Resuscitate') DNR
+                            md-checkbox.pink(flex='15', ng-model='vm.patient.alert.restrictedExtremity', aria-label='RE')
+                                abbr.initialism(title='Restricted Extremity') RE
+                            md-checkbox.yellow(flex='15', ng-model='vm.patient.alert.fallRisk', aria-label='Fall Risk')
+                                | Fall Risk
+                            md-checkbox.black(flex='15', ng-model='vm.patient.alert.other', aria-label='Other', ng-click='vm.patient.alert.otherDetails = null')
+                                | Other
+
+                        div(layout='row').notes
+                            div(flex, layout-padding)
+                                h3 Patient's Notes :
+                                h4 {{vm.patient.notes}}
+                            div(flex, layout-padding)
+                                h3 Doctor's Notes :
+                                h4(ng-show='!vm.patient.alert.other') No details listed.
+                                h4(ng-show= 'vm.patient.alert.other') {{vm.patient.alert.otherDetails}}
+
+    .text-right
+        small
+            em.text-muted
+                | Last updated on&nbsp;
+                span(data-ng-bind="vm.patient.updated | date:'mediumDate'")
+                |  by&nbsp;
+                span(data-ng-if='vm.patient.user', data-ng-bind='vm.patient.user.displayName')
+                span(data-ng-if='!vm.patient.user') Deleted User
+

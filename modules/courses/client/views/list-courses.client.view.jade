@@ -1,0 +1,46 @@
+//
+   Created by Nicole J. Nobles on 5/30/2016.
+
+section.container
+    md-content
+        md-card
+            md-toolbar
+                .md-toolbar-tools
+                    h1 Courses
+
+            div(data-ng-if='vm.user.canCreate()')
+                md-button.md-secondary.md-fab.md-fab-top-right(aria-label='Add', ui-sref='courses.create')
+                    md-tooltip(md-direction='right') Add Course
+                    md-icon.md-default-theme.material-icons add
+
+            div(data-ng-if='vm.user.canJoin()')
+                md-button.md-secondary.md-fab.md-fab-top-right(aria-label='Add', ui-sref='request-join')
+                    md-tooltip(md-direction='right') Join Course
+                    md-icon.md-default-theme.material-icons person_add
+
+            md-card-content
+                md-list(flex)
+                    md-subheader.md-no-sticky(data-ng-if='vm.courses.length')
+                        span {{vm.courses.length}} Course(s) Listed
+
+                    md-list-item.md-3-line(data-ng-repeat='course in vm.courses', data-ui-sref='courses.view({ courseId: course._id })')
+                        .md-list-item-text(layout='column', data-ui-sref='courses.view({ courseId: course._id })')
+                            h3(data-ng-bind='course.name')
+                            h4 ID : {{course._id}} |&nbsp;
+                                span.primary(ng-if='course.active') Active
+                                span.yellow(ng-if='!course.active') Inactive
+                            p: em {{course.students.length}} Students --
+                                | {{course.startDate | date:'shortDate'}} - {{course.endDate | date:'shortDate'}} :&nbsp;
+                                span(data-ng-if='course.user', data-ng-bind='course.user.displayName')
+                                span(data-ng-if='!course.user') Deleted User
+
+
+                .alert.alert-warning.text-center(data-ng-if='vm.courses.$resolved && !vm.courses.length && vm.user.canCreate()')
+                    | No Courses yet, why don't you
+                    a(data-ui-sref='courses.create')  create one
+                    | ?
+
+                .alert.alert-warning.text-center(data-ng-if='vm.courses.$resolved && !vm.courses.length && vm.user.canJoin()')
+                    | No Courses yet, why don't you
+                    a(data-ui-sref='request-join')  join one
+                    | ?

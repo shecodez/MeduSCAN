@@ -1,0 +1,64 @@
+//
+   Created by Nicole J. Nobles on 6/8/2016.
+
+section.container
+    .page-header
+        h2(data-ng-bind='vm.request.type')
+        small Subject ID : {{vm.request.subject_id}}
+
+    .pull-right(data-ng-show='vm.request.isCurrentUserOwner')
+        a.btn.btn-warning(data-ui-sref='requests.edit({ requestId: vm.request._id })')
+            i.fa.fa-edit
+        a.btn.btn-danger(data-ng-click='vm.remove()')
+            i.fa.fa-trash
+
+    .text-center
+        h3 Request ID
+        p.lead.primary(data-ng-bind='vm.request._id')
+
+    .text-right
+        small
+            em.text-muted
+                | Request made&nbsp;
+                span(data-ng-bind="vm.request.created | date:'mediumDate'")
+                |  by&nbsp;
+                span(data-ng-if='vm.request.user', data-ng-bind='vm.request.user.displayName')
+                span(data-ng-if='!vm.request.user') Deleted User
+
+    div(ng-cloak='')
+        md-content
+            md-toolbar
+                .md-toolbar-tools
+                    h2 Subscribers
+
+            // Add user_id to subscribers._id and add request_id to user.request_id
+            //.div(data-ng-show='vm.course.isCurrentUserOwner')
+                md-button.md-secondary.md-fab.md-fab-top-right( aria-label='Add', ng-click='')
+                    md-tooltip(md-direction='right') Add Subscriber
+                    md-icon.md-default-theme.material-icons add
+
+            md-content
+                .alert.text-center.text-danger(type='danger', ng-show='vm.status')
+                    span(ng-bind='vm.status')
+
+                table.table.table-striped.table-hover(ng-show='vm.request.subscribers.length')
+                    thead
+                        tr
+                            //th ID
+                            th First Name
+                            th Last Name
+                            th Email (academic)
+                            th Approval Status
+                    tbody
+                        tr(ng-repeat='subscriber in vm.subscribers | filter:search')
+                            //td: h5 {{subscriber._id}}
+                            td: h5 {{subscriber.firstName}}
+                            td: h5 {{subscriber.lastName}}
+                            td: h5: a(href='') {{subscriber.email}}
+                            td
+                                md-select(ng-model='subscriber.approvalStatus', style='margin: 0;', aria-label='subscriber')
+                                    md-option(ng-repeat='opt in vm.subscriberStatusOpts', ng-value='opt.value') {{opt.value}}
+
+                // If anything changed enable this button...
+                div(data-ng-show='vm.request.isCurrentUserOwner')
+                    md-button.md-raised.md-primary(ng-click='vm.updateSubscriberData()') Update

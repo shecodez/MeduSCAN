@@ -1,0 +1,18 @@
+<!--Created by Nicole J. Nobles on 6/14/2016.
+--><section class="container"><div class="page-header"><h1>Tutorials</h1></div><div class="list-group"><!--a.list-group-item(data-ng-repeat='tutorial in vm.tutorials')small: strong.text-uppercase {{tutorial.category}}
+h3: a(data-ui-sref='tutorials.view({ tutorialId: tutorial._id })') {{tutorial.title}}
+br
+p {{tutorial.content | limitTo: 512}}...
+br
+h5.text-muted
+    span(data-ng-if='tutorial.user', data-ng-bind='tutorial.user.displayName')
+    span(data-ng-if='!tutorial.user') Deleted User
+    span.mr-5(data-ng-bind='tutorial.tags')
+    |  |&nbsp;
+    span.mr-5(data-ng-bind="tutorial.created | date:'short'")
+
+//md-button.md-raised.md-primary(data-ng-href='/#!/tutorials/{{tutorial._id}}') Learn More
+--></div><!--.alert.alert-warning.text-center(data-ng-if='vm.tutorials.$resolved && !vm.tutorials.length')| No Tutorials yet, why don't you
+a(data-ui-sref='tutorials.create')  create one
+| ?
+--><div data-ng-if="vm.tutorials.$resolved &amp;&amp; !vm.tutorials.length" class="alert alert-warning text-center"><h2>New Tutorials Coming Soon...</h2></div></section>

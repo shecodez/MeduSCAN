@@ -1,0 +1,54 @@
+//
+   Created by Nicole J. Nobles on 5/23/2016.
+
+section(data-ng-controller='ContactController as cf')
+    .container
+        .mtb-15p
+
+            div.text-center(layout='row', layout-xs='column', layout-padding).mb-50
+                div(flex)
+                    h2
+                        i.fa.fa-envelope-o
+                        |  Mail
+                    br
+                    h4 PO Box 4171, Macon GA 31032
+
+                div(flex)
+                    h2
+                        i.fa.fa-phone
+                        |  Phone
+                    br
+                    //h4 +1 (123) 456-7890 (M-F 10:00 - 18:00)
+                    h4 Coming Soon!
+
+                div(flex)
+                    h2
+                        i.fa.fa-send
+                        |  Email
+                    br
+                    h4: a(href='mailto:support@meduscan.com')  support@meduscan.com
+
+
+            .contact_form
+                md-content.md-padding
+                    form(name='contactForm', data-ng-submit='cf.sendMail(contactForm)')
+                        md-input-container.md-block
+                            label Name
+                            input(name='name', data-ng-model='cf.contactName', type='text', required)
+                            div(ng-messages='contactForm.name.$error')
+                                div(ng-message='required') Name is required.
+
+                        md-input-container.md-block
+                            label Email Address
+                            input(name='email', data-ng-model='cf.contactEmail', type='email', required)
+                            div(ng-messages='contactForm.email.$error')
+                                div(ng-message='required') Email address is required.
+                                div(ng-message='email') Invalid Email address.
+
+                        md-input-container.md-block
+                            label Message
+                            textarea(name='msg', data-ng-model='cf.contactMsg', placeholder='Enter your message...', rows='4', required)
+                            div(ng-messages='contactForm.msg.$error')
+                                div(ng-message='required') Message is required.
+
+                        md-button(type='submit', ng-class="{'md-raised md-primary': (contactForm.$dirty && contactForm.$valid)}") Send Message

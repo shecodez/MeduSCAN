@@ -1,0 +1,241 @@
+/* variables */
+/*Globals*/
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+.site {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+.site-content {
+  flex: 1;
+}
+.primary {
+  color: #00bcd4;
+}
+.primary-bg {
+  background-color: #00bcd4;
+}
+.secondary {
+  color: #fda626;
+}
+.white {
+  color: #ffffff;
+}
+.blue {
+  color: #507996;
+}
+.lime {
+  color: #58a188;
+}
+.gold {
+  color: #da991a;
+}
+.pink {
+  color: #c3425e;
+}
+.aqua {
+  color: #d3cc7f;
+}
+.mint {
+  color: #7cbcac;
+}
+.red {
+  color: #ff0000;
+}
+.yellow {
+  color: #ffcc00;
+}
+.pink {
+  color: #ff0066;
+}
+.purple {
+  color: #9900ff;
+}
+.green {
+  color: #009999;
+}
+.black {
+  color: #000000;
+}
+.bg-white {
+  background-color: #ffffff;
+}
+.bg-black {
+  background-color: #222222;
+}
+.bg-light {
+  background-color: #dddddd;
+}
+.active {
+  color: #00bcd4;
+}
+.active md-icon {
+  color: #00bcd4;
+}
+.active p {
+  border-right: 5px solid #00bcd4;
+}
+/* Rules for sizing the icon. */
+.material-icons.md-18 {
+  font-size: 18px;
+}
+.material-icons.md-24 {
+  font-size: 24px;
+}
+.material-icons.md-36 {
+  font-size: 36px;
+}
+.material-icons.md-48 {
+  font-size: 48px;
+}
+/* Rules for using icons as black on a light background. */
+/* Rules for using icons as white on a dark background. */
+.separator {
+  margin: 0 5px;
+  border-right: 1px solid #aaaaaa;
+}
+.ml-5 {
+  margin-left: 5px;
+}
+.mr-5 {
+  margin-right: 5px;
+}
+.mt-10 {
+  margin-top: 10px;
+}
+.mt-50 {
+  margin-top: 50px;
+}
+.mb-50 {
+  margin-bottom: 50px;
+}
+.content {
+  margin-top: 50px;
+}
+.undecorated-link:hover {
+  text-decoration: none;
+}
+[ng\:cloak],
+[ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+  display: none !important;
+}
+.header-profile-image {
+  opacity: 0.8;
+  height: 28px;
+  width: 28px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.open .header-profile-image,
+a:hover .header-profile-image {
+  opacity: 1;
+}
+.user-header-dropdown-toggle {
+  padding-top: 11px !important;
+  padding-bottom: 11px !important;
+}
+.user-primary-account {
+  font-size: 30px;
+  top: 10px;
+  right: 10px;
+  position: absolute;
+}
+.error-text {
+  display: none;
+}
+.has-error .help-block.error-text {
+  display: block;
+}
+.has-error .help-inline.error-text {
+  display: inline;
+}
+.mtb-15p {
+  margin: 15% 0;
+}
+.blue-bg {
+  background-color: #507996;
+}
+.lime-bg {
+  background-color: #58a188;
+}
+.gold-bg {
+  background-color: #da991a;
+}
+.pink-bg {
+  background-color: #c3425e;
+}
+.aqua-bg {
+  background-color: #d3cc7f;
+}
+.mint-bg {
+  background-color: #7cbcac;
+}
+.tiles md-grid-tile {
+  transition: all 300ms ease-out 50ms;
+}
+.tiles md-grid-tile md-icon {
+  color: #ffffff;
+  padding-bottom: 50px;
+}
+.tiles md-grid-tile md-grid-tile-footer {
+  background: transparent;
+  height: 36px;
+}
+.tiles md-grid-tile-footer figcaption {
+  width: 100%;
+}
+.tiles md-grid-tile-footer figcaption h3 {
+  margin: 0 10px;
+  font-weight: 400;
+  width: 100%;
+  text-align: left;
+}
+.newsFeed {
+  width: 100%;
+  background-color: #dddddd;
+  padding: 32px 40px;
+}
+.newsFeed p {
+  margin: 5px 0;
+}
+.testimonials {
+  margin-top: 100px;
+}
+.testimonials .img-50 {
+  height: 50px;
+  width: 50px;
+}
+.testimonials blockquote {
+  position: relative;
+  padding: 10px 25px;
+  margin: 0;
+  border: none;
+}
+.testimonials blockquote > footer > span {
+  padding-top: 5px;
+  border-top: 2px solid #00bcd4;
+}
+.side-bar-nav md-list-item.ng-scope.active > a {
+  border-right: 5px solid #00bcd4;
+}
+.side-bar-nav md-list-item > a {
+  margin: 0 !important;
+}
+.bg-gold {
+  background-color: gold;
+}
+.bg-blue {
+  background-color: blue;
+}

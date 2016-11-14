@@ -1,0 +1,39 @@
+//
+   Created by Nicole J. Nobles on 6/8/2016.
+
+md-dialog(aria-label='Join Institution', flex='80', flex-gt-sm='50', flex-gt-md='40')
+    form
+        md-toolbar
+            .md-toolbar-tools
+                h2 Is this the correct institution?
+                span(flex)
+                md-button.md-icon-button(ng-click='cancel()', aria-label='Close dialog')
+                    md-icon.md-default-theme.material-icons close
+
+        md-dialog-content
+            .md-dialog-content
+                //alert.text-center.text-danger(type='danger', ng-show='vm.error')
+                    strong(ng-bind='vm.error')
+
+                .text-center
+                    h4 ID :&nbsp;
+                        span.primary {{institution._id}}
+
+                    h3 {{institution.name}}
+                        span: small  {{institution.ceebCode}}
+                    h4 {{institution.phone}}
+                    h4.primary {{institution.website}}
+
+                    br
+                    h4
+                        i.md-default-theme.material-icons.vertical-align-middle account_circle
+                        | &nbsp; Admin: {{institution.user.displayName}}
+                    p
+                        i.md-default-theme.material-icons.vertical-align-middle place
+                        | &nbsp; {{institution.address.street}}
+                        br
+                        | {{institution.address.city}}, {{institution.address.state}} {{institution.address.zip}}
+
+        md-dialog-actions(layout='row')
+            md-button(ng-click='ok()') Yes, Request Join
+            md-button(ng-click='cancel()', style='margin-right:20px;') Cancel

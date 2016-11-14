@@ -1,0 +1,23 @@
+//
+   Created by Nicole J. Nobles on 6/14/2016.
+
+section.container
+    br
+    small: strong.text-upppercase {{vm.tutorial.category}}
+    .page-header
+        h1(data-ng-bind='vm.tutorial.title')
+
+    .pull-right(data-ng-show='vm.tutorial.isCurrentUserOwner')
+        a.btn.btn-warning(data-ui-sref='tutorials.edit({ tutorialId: vm.tutorial._id })')
+            i.glyphicon.glyphicon-edit
+        a.btn.btn-danger(data-ng-click='vm.remove()')
+            i.glyphicon.glyphicon-trash
+    small
+        em.text-muted
+            | Posted on&nbsp;
+            span(data-ng-bind="vm.tutorial.created | date:'mediumDate'")
+            | by&nbsp;
+            span(data-ng-if='vm.tutorial.user', data-ng-bind='vm.tutorial.user.displayName')
+            span(data-ng-if='!vm.tutorial.user') Deleted User
+
+    p.lead(data-ng-bind='vm.tutorial.content')

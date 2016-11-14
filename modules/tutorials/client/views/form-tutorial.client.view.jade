@@ -1,0 +1,35 @@
+//
+   Created by Nicole J. Nobles on 6/14/2016.
+
+section(flex layout-fill layout='row')
+    md-content(layout='row',  layout-align='center-center', layout-padding, ng-cloak flex)
+        md-content
+            .page-header
+                h1 {{vm.tutorial._id ? 'Edit Tutorial' : 'New Tutorial'}}
+
+
+        form(name='vm.form.tutorialForm', ng-submit='vm.save(vm.form.tutorialForm.$valid)', novalidate='')
+            .text-danger(ng-show='vm.error')
+                .alert.alert-danger(role='alert')
+                    strong(ng-bind='vm.error')
+            br
+            div(layout='row', layout-xs='column')
+                div(flex)
+                    md-input-container.md-block
+                        label Category
+                        input(name='category', ng-model='vm.tutorial.category')
+                div(flex)
+                    md-input-container.md-block
+                        label Title
+                        input(name='title', ng-model='vm.tutorial.title', required)
+                        div(ng-messages='vm.form.tutorialForm.title.$error', role='alert')
+                            div(ng-message='required') Tutorial title is required.
+
+            br
+            md-input-container.md-block
+                label Content
+                textarea(ng-model='vm.tutorial.content', rows='15', md-select-on-focus='', required)
+                div(ng-messages='vm.form.tutorialForm.content.$error', role='alert')
+                    div(ng-message='required') Tutorial content is required.
+
+            md-button.md-raised.md-primary(type='submit') {{vm.tutorial._id ? 'Update' : 'Create'}}

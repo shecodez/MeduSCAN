@@ -1,0 +1,49 @@
+//
+   Created by Nicole J. Nobles on 6/14/2016.
+
+section.container
+    .page-header
+        h1(data-ng-bind='vm.medication.name')
+        small Medication ID : {{vm.medication._id}}
+    .pull-left
+        h3(style='margin-top: 0') Status :&nbsp;
+            span.primary(ng-if='vm.medication.active') Active
+            span.yellow(ng-if='!vm.medication.active') Inactive
+
+    .pull-right(data-ng-show='vm.medication.isCurrentUserOwner')
+        a.btn.btn-info(title='Print', , data-ng-click='vm.printBarcode(vm.medication)')
+            i.fa.fa-print
+        a.btn.btn-warning(title='Edit', data-ui-sref='medications.edit({ medicationId: vm.medication._id })')
+            i.fa.fa-edit
+        a.btn.btn-danger(title='Delete', data-ng-click='vm.remove()')
+            i.fa.fa-trash
+
+    .clearfix
+    .text-center
+        md-button.md-raised.md-primary(data-ui-sref='medications.list') Go back to medications
+    br
+    .well
+        div(layout='column', layout-gt-md='row', layout-margin).bg-white
+            .md-block(flex='40')
+                h4: io-barcode(code='{{vm.medication._id}}', type='CODE128B', options='vm.bcOpts')
+
+            .md-block(flex='40')
+                h4 {{vm.medication.name}}
+                    small: em  {{vm.medication.type}}
+                p {{vm.medication.amount}} : {{vm.medication.strength}} {{vm.medication.unit}} {{vm.medication.form}} | {{vm.medication.drugClass}}
+                p {{vm.medication.description}}
+
+            .md-block(flex='20')
+                h4 {{vm.medication.pregnancyCategory}}
+                small: em updated :&nbsp;
+                    span(data-ng-bind="vm.medication.updated | date:'mediumDate'")
+
+    br
+    small
+        em.text-muted
+            | Posted on&nbsp;
+            span(data-ng-bind="vm.medication.created | date:'mediumDate'")
+            |  by&nbsp;
+            span(data-ng-if='vm.medication.user', data-ng-bind='vm.medication.user.displayName')
+            span(data-ng-if='!vm.medication.user') Deleted User
+

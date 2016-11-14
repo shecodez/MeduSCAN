@@ -1,0 +1,36 @@
+//
+   Created by Nicole J. Nobles on 5/24/2016.
+
+section(data-ng-controller='StudentsController').container
+
+    .text-center
+        h1(data-ng-if="role === 'student'") Go to&nbsp;
+            a(href='/dashboard') Student Dashboard
+
+    .col-md-6.col-md-offset-3
+        h2.text-center Instructions
+        br
+
+        h4 Step 1
+        p Sigh up/Sign in and go to the [manage account] link under the profile image in the top navigation bar.
+
+        h4 Step 2
+        p Once you have the course join ID from your instructor, click the [request join] button.
+
+        h4 Step 3
+        p Enter the 24 digit course ID. If the course that pops up is correct click [yes, request join].
+            | Once your instructor view the request he/she will acknowledge your request to join the course.
+            | Your request status can be tracked by going back to the [manage account] link.
+
+        h4 Step 4
+        p Once the request status says approved you can add the course to "My courses". Since the MeduSCAN web app is
+            | in beta test mode a beta tester key will be applied to your course. Once you've added the course to your
+            | account an admin will change your role to student.
+
+        h4 Step 5
+        p As a student you will be able to access your student dashboard via the [students] link on the home page where
+            | you can lookup patient EMARs listed under the course you've selected.
+        br
+        img(src='modules/core/client/img/brand/logo.png')
+
+

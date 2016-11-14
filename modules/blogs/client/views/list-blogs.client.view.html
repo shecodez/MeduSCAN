@@ -1,0 +1,5 @@
+<!--Created by Nicole J. Nobles on 6/8/2016.
+--><section class="container"><div class="page-header"><h1>Blogs</h1></div><!--TODO change this to md-cards--><div class="list-group"><div data-ng-repeat="blog in vm.blogs" class="list-group-item"><small><strong class="text-uppercase">{{blog.category}}</strong></small><h3><a data-ui-sref="blogs.view({ blogId: blog._id })">{{blog.title}}</a></h3><br/><p>{{blog.content | limitTo: 512}}...</p><br/><p><h5 class="text-muted"><span data-ng-if="blog.user" data-ng-bind="blog.user.displayName"></span><span data-ng-if="!blog.user">Deleted User</span><span data-ng-bind="blog.tags" class="mr-5"></span> |&nbsp;<span data-ng-bind="blog.created | date:'short'" class="mr-5"></span></h5></p><!--md-button.md-raised.md-primary(data-ng-href='/#!/blogs/{{blog._id}}') Read More--></div></div><!--.alert.alert-warning.text-center(data-ng-if='vm.blogs.$resolved && !vm.blogs.length')| No Blogs yet, why don't you
+a(data-ui-sref='blogs.create')  create one
+| ?
+--><div data-ng-if="vm.blogs.$resolved &amp;&amp; !vm.blogs.length" class="alert alert-warning text-center"><h2>New Blogs Coming Soon...</h2></div></section>

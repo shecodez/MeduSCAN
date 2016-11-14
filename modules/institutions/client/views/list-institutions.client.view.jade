@@ -1,0 +1,35 @@
+//
+   Created by Nicole J. Nobles on 6/17/2016.
+
+section.container
+    md-content
+        md-card
+            md-toolbar
+                .md-toolbar-tools
+                    h1 Institutions
+
+            md-button.md-secondary.md-fab.md-fab-top-right(aria-label='Add', ui-sref='institutions.create')
+                md-tooltip(md-direction='right') Add Institution
+                md-icon.md-default-theme.material-icons add
+
+            md-card-content
+                md-list(flex)
+                    md-subheader.md-no-sticky(data-ng-if='vm.institutions.length')
+                        span {{vm.institutions.length}} Institution(s) Listed
+
+                    md-list-item.md-3-line(data-ng-repeat='institution in vm.institutions', data-ui-sref='institutions.view({ institutionId: institution._id })')
+                        .md-list-item-text(layout='column', data-ui-sref='institutions.view({ institutionId: institution._id })')
+                            h3(data-ng-bind='institution.name')
+                            h4 ID : {{institution._id}} |&nbsp;
+                                span.primary(ng-if='institution.active') Active
+                                span.yellow(ng-if='!institution.active') Inactive
+                            p: em {{institution.teachers.length}} Teachers --
+                                | {{institution.created | date:'mediumDate'}} :&nbsp;
+                                span(data-ng-if='institution.user', data-ng-bind='institution.user.displayName')
+                                span(data-ng-if='!institution.user') Deleted User
+
+
+                .alert.alert-warning.text-center(data-ng-if='vm.institutions.$resolved && !vm.institutions.length')
+                    | No Institutions yet, why don't you
+                    a(data-ui-sref='institutions.create')  create one
+                    | ?

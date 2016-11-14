@@ -1,0 +1,23 @@
+//
+   Created by Nicole J. Nobles on 6/8/2016.
+
+section(data-ng-controller='SideNavController as vm', flex layout-fill)
+    md-content.side-bar-nav(layout='column' flex layout-fill)
+        md-list
+            md-list-item(ng-click='vm.toggleMenu()')
+                md-icon.md-default-theme.material-icons view_list
+            md-divider
+
+            md-list-item(ng-repeat='link in vm.sideBarLinks' ui-sref='{{link.href}}', ui-sref-active='active')
+                md-icon.md-default-theme.material-icons {{link.icon}}
+
+        div(flex)
+
+        md-list
+            md-divider
+            md-list-item(ui-sref='contact', ui-sref-active='active')
+                md-icon.md-default-theme.material-icons send
+
+            md-list-item(ui-sref='settings.account', ui-sref-active='active')
+                md-icon.md-default-theme.material-icons brightness_high
+

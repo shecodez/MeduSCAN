@@ -1,0 +1,94 @@
+//
+   Created by Nicole J. Nobles on 6/14/2016.
+
+section.container
+    md-content
+        .page-header
+            h1 {{vm.medication._id ? 'Edit Medication' : 'New Medication'}}
+    md-content
+        form(name='vm.form.medicationForm', ng-submit='vm.save(vm.form.medicationForm.$valid)', novalidate='')
+            .text-center.text-danger(data-ng-show='error')
+                .alert.alert-danger(role='alert')
+                    strong(data-ng-bind='error')
+
+            div(layout='row')
+                md-input-container(flex='50', flex-gt-sm='20')
+                    label Medication Status
+                    md-select(data-ng-model='vm.medication.active')
+                        md-option(ng-repeat='status in vm.statusOpts', ng-value='status.value') {{status.label}}
+
+                md-input-container.md-block(flex)
+                    label ID :&nbsp;
+                        span.primary {{vm.medication._id}}
+                    input(disabled)
+
+            div(layout='row')
+                md-input-container.md-block(flex='20')
+                    label mID
+                    //ng-model='vm.medication.pID'
+                    input(disabled)
+
+                md-input-container(flex='60')
+                    label Name
+                    input(name='name', data-ng-model='vm.medication.name', required)
+                    div(ng-messages='vm.form.medicationForm.name.$error')
+                        div(ng-message='required') Medication name required.
+
+                md-input-container(flex='20')
+                    label Type
+                    md-select(data-ng-model='vm.medication.type')
+                        md-option(ng-repeat='type in vm.medTypes', ng-value='type.value') {{type.value}}
+
+            div(layout='row')
+                md-input-container.md-block(flex='100')
+                    label Description (optional)
+                    textarea(data-ng-model='vm.medication.description', md-maxlength='150', rows='3', md-select-on-focus='', placeholder='Enter a brief description of the medication ...')
+
+            div(layout='row')
+                .md-block(layout='column', flex='50')
+                    md-input-container
+                        label Drug Class
+                        input(name='drugClass', data-ng-model='vm.medication.drugClass')
+
+                    //md-input-container
+                        label Pregnancy Category
+                        md-select(data-ng-model='vm.medication.pregnancyCategory')
+                            md-option(ng-repeat='category in vm.pregnancyCategories', ng-value='category.value') {{category.label}}
+
+                .md-block(layout='column', flex='50')
+                    // delete this and uncomment above when avatar img is added
+                    md-input-container
+                        label Pregnancy Category
+                        md-select(data-ng-model='vm.medication.pregnancyCategory')
+                            md-option(ng-repeat='category in vm.pregnancyCategories', ng-value='category.value') {{category.value}}
+
+                    //md-input-container.md-block(flex)
+                        md-radio-button(ng-model='avatar', ng-value='avatarData.value', aria-label='avatarData.title')
+                        md-icon(md-svg-icon='patient.avatar')
+                        md-button(ng-click='') Change Avatar
+
+            div(layout='row')
+                md-input-container.md-block(flex='25')
+                    label Amount
+                    input(name='amount', type='number', data-ng-model='vm.medication.amount', ng-pattern='/^[0-9]+(\.[0-9]{1,2})?$/', required)
+                    div(ng-messages='vm.form.medicationForm.amount.$error')
+                        div(ng-message='required') Medication amount required.
+                        div(ng-message='pattern') Only whole / up to 2 decimal No. #.##
+
+                md-input-container.md-block(flex='25')
+                    label Form
+                    input(name='form', data-ng-model='vm.medication.form')
+
+                md-input-container.md-block(flex='25')
+                    label Strength
+                    input(name='strength', type='number', data-ng-model='vm.medication.strength', ng-pattern='/^[0-9]+(\.[0-9]{1,2})?$/', required)
+                    div(ng-messages='vm.form.medicationForm.strength.$error')
+                        div(ng-message='required') Medication strength required.
+                        div(ng-message='pattern') Only whole / up to 2 decimal No. #.##
+
+                md-input-container.md-block(flex='25')
+                    label Unit
+                    input(name='unit', data-ng-model='vm.medication.unit')
+
+            md-button.md-raised.md-primary(type='submit') {{vm.medication._id ? 'Update' : 'Create'}}
+

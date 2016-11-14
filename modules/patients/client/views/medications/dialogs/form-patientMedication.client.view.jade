@@ -1,0 +1,86 @@
+//
+   Created by Nicole J. Nobles on 6/21/2016.
+
+md-dialog(aria-label='Lookup Medication', flex='80', flex-gt-sm='60', flex-gt-md='50')
+    md-content
+        //form(name='pMedForm', novalidate, autocomplete='off', ng-model-options="{updateOn: 'submit'}", ng-submit='ok(patient.medication)')
+        md-toolbar
+            .md-toolbar-tools
+                h2 {{action}} Patient Medication
+                span(flex='')
+                md-button.md-icon-button(ng-click='cancel()', aria-label='Close dialog')
+                    md-icon.md-default-theme.material-icons close
+
+        md-dialog-content
+            .md-dialog-content
+                .text-center
+                    h4 {{patient.lastName}}, {{patient.firstName}} ID :
+                        span.primary {{patient._id}}
+                    p DOB:&nbsp;
+                        span(data-ng-bind="patient.dob | date:'mediumDate'")
+                    p {{calcAge(patient.dob)}}Y/{{patient.gender}}&nbsp;
+                        span(ng-if='patient.pregnant') Pregnant
+                    p Scenario Time: {{patient.scenarioTime | date:'HH:mm:ss'}}
+
+                    h3 {{medication.name}}
+                        span: small  {{medication.type}}
+                        |  ID :
+                        span.primary  {{medication._id}}
+                    h4 {{medication.amount}} : {{medication.strength}} {{medication.unit}} {{medication.form}}
+
+                form(name='pMedForm', novalidate, autocomplete='off')
+                    //br
+                    //alert.text-center.text-danger(type='danger', ng-show='vm.error')
+                        strong(ng-bind='vm.error')
+
+                    div(layout='row', flex layout-align='center none')
+                        //TODO: Turn times[] into md-chips
+                        h3 Time due:
+                        mdp-time-picker(name='time', ng-model='patient.medication.time', required, aria-label='Due Time')
+                            div(ng-messages='pMedForm.time.$error')
+                                div(ng-message='required') Medication due time is required
+                                div(ng-message='format') Invalid format
+                        h3.primary  {{ patient.medication.time | date:'HH:mm' }}
+
+                    div(layout='row', layout-align='space-around center')
+                        md-checkbox(ng-model='patient.medication.given', aria-label='Given')
+                            | Mark Medication Given
+
+                        md-checkbox(ng-model='patient.medication.triggerScenario', aria-label='Scenario Flag', ng-click='patient.medication.scenarioAlertMsg = ""')
+                            | Trigger Scenario Flag
+
+
+                    md-input-container(ng-show='patient.medication.triggerScenario').md-block
+                        label Scenario Alert Msg
+                        input(name= 'alertMsg', data-ng-model='patient.medication.scenarioAlertMsg', md-maxlength='100', ng-required='patient.medication.triggerScenario')
+                        div(ng-messages='pMedForm.alertMsg.$error', role='alert')
+                            div(ng-message='required') Scenario Alert Message required.
+
+
+                    div(layout='row')
+                        md-input-container.md-block(flex)
+                            label Medication Schedule
+                            md-select(data-ng-model='patient.medication.schedule')
+                                md-option(ng-repeat='type in medTypeOpts', ng-value='type.value') {{type.value}}
+                        md-input-container.md-block(flex)
+                            label Dose
+                            input(name='dose', type='number', data-ng-model='patient.medication.dose', ng-pattern='/^[0-9]+(\.[0-9]{1,2})?$/', required, placeholder='{{medication.strength}}')
+                            div(ng-messages='pMedForm.dose.$error')
+                                div(ng-message='required') Medication dose required.
+                                div(ng-message='pattern') Only whole / up to 2 decimal No. #.##
+
+                    div(layout='row')
+                        md-input-container.md-block(flex)
+                            label Frequency
+                            input(data-ng-model='patient.medication.frequency')
+                        md-input-container.md-block(flex)
+                            label Route
+                            input(data-ng-model='patient.medication.route')
+
+                    md-input-container.md-block(flex='100')
+                        label Directions:
+                        textarea(data-ng-model='patient.medication.directions', md-maxlength='150', rows='2', md-select-on-focus='')
+
+        md-dialog-actions(layout='row')
+            md-button(type='submit', ng-click='ok(patient.medication)', ng-disabled='pMedForm.$invalid') {{action}}
+            md-button(type='button', ng-click='cancel()', style='margin-right:20px;') Cancel

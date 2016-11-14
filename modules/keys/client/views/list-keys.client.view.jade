@@ -1,0 +1,36 @@
+//
+   Created by Nicole J. Nobles on 6/17/2016.
+
+section.container
+    md-content
+        md-card
+            md-toolbar
+                .md-toolbar-tools
+                     h1 Keys
+
+            md-button.md-secondary.md-fab.md-fab-top-right(aria-label='Add', ui-sref='keys.create')
+                md-tooltip(md-direction='right') Add Key
+                md-icon.md-default-theme.material-icons add
+
+            md-card-content
+                md-list(flex)
+                    md-subheader.md-no-sticky(data-ng-if='vm.keys.length')
+                        span {{vm.keys.length}} Key(s) Listed
+
+                    md-list-item.md-3-line(data-ng-repeat='key in vm.keys', data-ui-sref='keys.view({ keyId: key._id })')
+                        .md-list-item-text(layout='column', data-ui-sref='keys.view({ keyId: key._id })')
+                            // TODO: make registeredTo key.displayName
+                            h3 FirstName LastName | {{key.type}}
+                            h4 {{key.activationDate | date:'shortDate'}} - {{key.expirationDate | date:'shortDate'}} |&nbsp;
+                                span.primary(ng-if='key.active') Active
+                                span.yellow(ng-if='!key.active') Inactive
+                            p: em Created ~ {{key.created | date:'mediumDate'}}
+                                |  :&nbsp;
+                                // TODO: change user.role = admin Display name to Admin
+                                span(data-ng-if='key.user', data-ng-bind='key.user.displayName')
+                                span(data-ng-if='!key.user') Deleted User
+
+                .alert.alert-warning.text-center(data-ng-if='vm.keys.$resolved && !vm.keys.length')
+                    | No Keys yet, why don't you
+                    a(data-ui-sref='keys.create')  create one
+                    | ?

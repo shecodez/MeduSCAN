@@ -1,0 +1,49 @@
+//
+   Created by Nicole J. Nobles on 6/7/2016.
+
+.side-nav-menu(flex layout-fill)
+    md-content(layout-padding='', layout='column' flex layout-fill)
+        .text-right
+            md-button.md-icon-button(ng-click='vm.close()', aria-label='Close')
+                i.material-icons.md-18 close
+
+        h2.logo.text-center(style='margin-top: 0;')
+            i.fa.fa-barcode
+            |  MeduSCAN
+
+        //md-list(ng-show='vm.authentication.user')
+            md-divider
+            md-list-item
+                md-input-container.md-block
+                    md-select(placeholder='Your Course List', ng-model='course', md-on-open='loadUserCourses()')
+                        md-option(ng-value='course', ng-repeat='course in vm.courses') {{course.name}}
+            md-divider
+
+        md-list(ng-hide='vm.authentication.user', hide-gt-xs)
+            md-divider
+            md-list-item(layout-align='space-around center')
+                md-button(ui-sref='authentication.signin', ui-sref-active='active')
+                    md-icon.md-default-theme.material-icons &#xE898;
+                    p Sign In
+
+                md-button(ui-sref='authentication.signup', ui-sref-active='active')
+                    md-icon.md-default-theme.material-icons &#xE897;
+                    p Sign Up
+            md-divider
+
+        md-list
+            md-subheader.md-no-sticky Menu
+            md-list-item(ng-repeat='link in vm.coreLinks' ui-sref='{{link.goTo}}', ui-sref-active='active')
+                md-icon.md-default-theme.material-icons {{link.icon}}
+                p {{link.label}}
+        span(flex)
+        md-list
+            md-divider
+            md-list-item(ui-sref='chat', ui-sref-active='active', ng-disabled='true')
+                md-icon.md-default-theme.material-icons chat
+                p Chat
+            md-list-item(ui-sref='legal', ng-click='vm.openLegalDialog()')
+                md-icon.md-default-theme.material-icons gavel
+                p Legal
+
+

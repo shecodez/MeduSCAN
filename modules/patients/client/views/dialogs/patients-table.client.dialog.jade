@@ -1,0 +1,37 @@
+//
+   Created by Nicole J. Nobles on 6/23/2016.
+
+md-dialog(aria-label='Patients Table', flex='80', flex-gt-sm='50', flex-gt-md='40')
+    md-content
+        md-toolbar
+            .md-toolbar-tools
+                h2 Patients
+                span(flex='')
+                md-button.md-icon-button(ng-click='cancel()', aria-label='Close dialog')
+                    md-icon.md-default-theme.material-icons close
+
+        md-dialog-content
+            .md-dialog-content
+                form(name='patientsTable')
+                    table.table.table-striped.table-hover(ng-show='patients.length')
+                        thead
+                            tr
+                                th Add
+                                th status
+                                th name
+                        tbody
+                            tr(ng-repeat='patient in patients | filter:search')
+                                td: h5
+                                    md-checkbox(ng-model='patient.selected', aria-label='selected', ng-disabled='patient.isReadOnly')
+                                td: h5
+                                    span.primary(ng-if='patient.active') Active
+                                    span.yellow(ng-if='!patient.active') Inactive
+                                td: h5 {{patient.firstName}} {{patient.lastName}}
+
+                .alert.alert-warning.text-center(data-ng-if='!patients.length')
+                    | No Patients have been created yet.
+
+        // If anything changed enable this button...
+        md-dialog-actions(layout='row')
+            md-button(ng-click='ok()', ng-disabled='!patientsTable.$dirty') Add Selected
+            md-button(ng-click='cancel()', style='margin-right:20px;') Cancel

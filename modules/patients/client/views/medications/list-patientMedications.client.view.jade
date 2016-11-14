@@ -1,0 +1,73 @@
+//
+   Created by Nicole J. Nobles on 6/21/2016.
+
+section.container
+    .page-header
+        h2 {{vm.patient.lastName}}, {{vm.patient.firstName}} Medications
+        small Patient ID : {{vm.patient._id}}
+    .pull-left
+        h3(style='margin-top: 0') Status :&nbsp;
+            span.primary(ng-if='vm.patient.active') Active
+            span.yellow(ng-if='!vm.patient.active') Inactive
+
+    .pull-right
+        a.btn.btn-info(title='Print', disabled)
+            i.fa.fa-print
+        md-button.md-raised.md-primary
+            a(data-ui-sref='patients.list') Go back to patients
+
+
+    .clearfix
+    br
+
+    div(ng-if='vm.patient.medications.length')
+        div(layout='row', layout-xs='column')
+            div(flex='80')
+                h3 Search...
+            div(flex='40')
+                .text-right
+                    md-button.md-raised.md-accent(ng-click='vm.dialogLookupMed()') + New Medication
+
+        div(layout='row')
+            table.table.table-striped.table-hover
+                thead
+                    tr
+                        th Given
+                        th Medication
+                        th Dose
+                        th Amount
+                        th Route
+                        th Frequency
+                        th Time
+                        th Directions
+                        th Schedule
+                        th S. Flag
+                        th Actions
+                tbody
+                    tr(ng-repeat='pm in vm.patientMedications | filter:search')
+                        td: h5: md-checkbox(aria-label='Given', data-ng-checked='pm.given')
+                        td: h5 {{pm._id.name}}
+                            span: small  {{pm._id.type}}
+                            h5: a(ng-if='pm._id.description', href='', title='{{pm._id.description}}') Description
+                        td: h5 {{pm.dose}} {{pm._id.unit}}
+                        td: h5 {{vm.calcAmt(pm._id.strength, pm.dose, pm._id.amount)}} {{pm._id.form}}
+                        td: h5 {{pm.route}}
+                        td: h5 {{pm.frequency}}
+                        td: h5 {{pm.time | date: 'HH:mm'}}
+                        td: h5: a(ng-if='pm.directions', href='', title='{{pm.directions}}') Directions
+                        td: h5 {{pm.schedule}}
+                        td: h5: md-checkbox(aria-label='Flag', data-ng-checked='pm.triggerScenario')
+                            span(ng-if='pm.scenarioAlertMsg'): a(href='', title='{{pm.scenarioAlertMsg}}') Msg
+                        td: h5
+                            //a.btn.btn-info(title='View Medication', ng-click='vm.dialogViewPMed($index)')
+                                i.fa.fa-eye
+                            a.btn.btn-warning(title='Edit Medication', ng-click="vm.dialogPatientMedForm('Update', vm.patient, pm._id, $index)")
+                                i.fa.fa-edit
+                            a.btn.btn-danger(title='Remove Medication', ng-click='vm.removePatientMed($index)')
+                                i.fa.fa-trash
+
+    .alert.alert-warning.text-center(data-ng-hide='vm.patient.medications.length')
+        | No medications listed for "{{vm.patient.firstName}} {{vm.patient.lastName}}" yet, why don't you
+        a(ng-click='vm.dialogLookupMed()')  add one
+        |  ?
+

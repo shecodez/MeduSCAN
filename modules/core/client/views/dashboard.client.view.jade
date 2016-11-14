@@ -1,0 +1,13 @@
+//
+   Created by Nicole J. Nobles on 6/10/2016.
+section(layout='row' flex)
+
+    aside.sidebar-nav(flex-xs='15', flex-sm='10', flex='5')
+        div(data-ng-include="'modules/core/client/views/partials/side-bar.client.view.html'", layout-fill)
+
+    section.list-view(hide-xs, flex-sm='30', flex='25').bg-light
+        div(data-ng-include="'modules/core/client/views/partials/instructions.client.view.html'")
+
+    section.main-view(flex)
+        div(data-ng-include="'modules/core/client/views/partials/dashboard-home.client.view.html'", layout-fill)
+

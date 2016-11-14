@@ -1,0 +1,116 @@
+//
+   Created by Nicole J. Nobles on 6/2/2016.
+
+section(ng-controller='ManageAccountController as vm')
+
+    h2 Manage Account
+
+    div(layout='row', layout-xs='column', layout-padding)
+        div(flex)
+            h2 Students
+            h4 Have the Course ID from your instructor?
+            md-button.md-raised.md-primary(data-ui-sref='request-join') Request Join
+        div(flex)
+            h2 Teachers
+            h4 Have the Institution ID from your admin?
+            md-button.md-raised.md-primary(data-ui-sref='request-join') Request Join
+
+    div()
+        md-content
+            md-toolbar
+                .md-toolbar-tools
+                    h3 Requests &nbsp;
+                        span: small.text-muted {{vm.authentication.user.requests.length}} request(s) made
+            md-content
+                br
+                table.table.table-striped.table-hover(ng-if='vm.authentication.user.requests.length')
+                    thead
+                        tr
+                            th For
+                            th Name
+                            th Admin
+                            th Status
+
+                    tbody
+                        tr(ng-repeat='request in vm.requests | filter:search')
+                            td: h5 {{request.type}}
+                            td: h5 {{request.name}}
+                            td: h5 {{request.user}}
+                            td: h5 {{request.stat}}
+                            td.text-center
+                                md-button.md-icon-button.md-primary(ng-if="!vm.addedToMe(request.type, request.for_id) && request.stat==='Approved'", ng-click='vm.addToMe(request.type, request.for_id)')
+                                    md-tooltip(md-direction='right') Add to My {{request.type}}s
+                                    md-icon.md-default-theme.material-icons add_circle_outline
+
+                                md-button.md-icon-button.md-primary(ng-if='vm.addedToMe(request.type, request.for_id)')
+                                    md-tooltip(md-direction='right') {{request.type}} Added
+                                    md-icon.md-default-theme.material-icons offline_pin
+
+                                md-button.md-icon-button.md-warn(ng-if="request.stat === 'N/A'")
+                                    md-tooltip(md-direction='right') Waiting on admin to add you to {{request.type}}
+                                    md-icon.md-default-theme.material-icons error_outline
+
+
+    //<list institutions>
+    div(ng-if='vm.authentication.user.institutions.length')
+        md-content
+            md-toolbar
+                .md-toolbar-tools
+                    h2 My Institutions
+
+            md-content
+                br
+                table.table.table-striped.table-hover
+                    thead
+                        tr
+                            th Status
+                            th Name
+                            th License
+
+                    tbody
+                        tr(ng-repeat='institution in vm.institutions | filter:search')
+                            td: h5
+                                span.primary(ng-if='institution.active') Active
+                                span.yellow(ng-if='!institution.active') Inactive
+                            td: h5 {{institution.name}}
+                            td: h5 {{institution.key}}
+                            td.text-center
+                                md-button.md-icon-button.primary(ng-disabled='true')
+                                    md-tooltip(md-direction='right') Upgrade
+                                    md-icon.md-default-theme.material-icons credit_card
+
+    br
+    //<list courses>
+    div(ng-if='vm.authentication.user.courses.length')
+        md-content
+            md-toolbar
+                .md-toolbar-tools
+                    h2 My Courses
+
+            md-content
+                br
+                table.table.table-striped.table-hover
+                    thead
+                        tr
+                            th Status
+                            th Name
+                            th Duration
+                            th Teacher
+                            th Access Key
+
+
+                    tbody
+                        tr(ng-repeat='course in vm.courses | filter:search')
+                            td: h5
+                                span.primary(ng-if='course.active') Active
+                                span.yellow(ng-if='!course.active') Inactive
+                            td: h5 {{course.name}}
+                            td: h5 {{course.startDate | date:'shortDate'}} - {{course.endDate | date:'shortDate'}}
+                            td: h5 {{course.teacher}}
+                            td: h5 {{course.key}}
+                            td.text-center
+                                md-button.md-icon-button.primary(ng-disabled='true')
+                                    md-tooltip(md-direction='right') Upgrade
+                                    md-icon.md-default-theme.material-icons credit_card
+
+

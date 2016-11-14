@@ -1,0 +1,21 @@
+//
+   Created by Nicole J. Nobles on 6/27/2016.
+
+md-dialog(aria-label='Simple Alert', flex='80', flex-gt-sm='50', flex-gt-md='40')
+    md-content
+        md-toolbar
+            .md-toolbar-tools
+                md-icon.md-default-theme.material-icons warning
+                h2 &nbsp; {{dialog.title}}
+                span(flex='')
+                md-button.md-icon-button(ng-click='cancel()', aria-label='Close dialog')
+                    md-icon.md-default-theme.material-icons close
+
+        md-dialog-content
+            .md-dialog-content
+                .alert.alert-danger
+                    p {{dialog.msg}}
+
+        md-dialog-actions(layout='row')
+            //md-button(ng-click='ok()') Ok
+            md-button(ng-click='cancel()') Ok

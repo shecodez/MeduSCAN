@@ -1,0 +1,35 @@
+//
+   Created by Nicole J. Nobles on 6/25/2016.
+
+section(flex layout-fill layout='row')
+    md-content.authForm(layout='row', layout-align='center-center', layout-padding, ng-cloak, flex)
+        md-card(flex, flex-gt-sm='40', flex-gt-md='33')
+            md-toolbar
+                .md-toolbar-tools
+                    h2 Patient Lookup
+            md-card-content
+                form(name='vm.form.pLookupForm', data-ng-submit='vm.lookupPatient(vm.form.pLookupForm.$valid)', novalidate, autocomplete='off')
+                    br
+                    alert.text-center.text-danger(type='danger', ng-show='vm.error')
+                        strong(ng-bind='vm.error')
+
+                    md-input-container(flex='50', style='padding-bottom: 24px;').md-block
+                        label Course
+                        md-select(name='course', data-ng-model='vm.course', required, aria-label='Select Course')
+                            md-option(ng-repeat='course in vm.courses', ng-value='course') {{course.name}}
+                        div(ng-messages='vm.form.pLookupForm.course.$error', role='alert')
+                            div(ng-message='required') Please select a course.
+
+                    h4.text-center Scan the barcode located on the patient wristband to begin.
+                    br
+                    md-input-container.md-block
+                        label Patient ID
+                        input(name='pID', ng-model='vm.pID', required, lowercase, md-maxlength='24', minlength='24', placeholder='Scan/Enter the Patient ID Number...')
+                        div(ng-messages='vm.form.pLookupForm.pID.$error', role='alert')
+                            div(ng-message='required') ID is required.
+                            div(ng-message='md-maxlength') ID is too long.
+                            div(ng-message='minlength') ID is too short.
+                    br
+                    .text-center
+                        md-button.md-raised.md-primary(type='submit', ng-disabled='vm.form.pLookupForm.$invalid') Continue
+

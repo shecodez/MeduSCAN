@@ -1,0 +1,16 @@
+//
+   Created by Nicole J. Nobles on 5/23/2016.
+
+section(data-ng-controller='GettingStartedController as vm')
+    .container
+        .mtb-15p
+            .text-center.mb-50
+                h3 The steps for getting started with MeduSCAN are pretty simple.
+                h4 Please choose which option describes you best.
+
+            md-grid-list.tiles(md-cols='1', md-cols-sm='2', md-cols-md='2', md-cols-gt-md='4', md-row-height-gt-md='1:1', md-row-height='4:3', md-gutter='12px', md-gutter-gt-sm='8px')
+                md-grid-tile(ng-repeat='tile in vm.tiles', md-rowspan='{{tile.span.row}}', md-colspan='{{tile.span.col}}', md-colspan-sm='1', md-colspan-xs='1', ng-class='tile.background', data-ui-sref='{{tile.href}}', md-ink-ripple)
+                    md-icon.fa(md-font-icon='{{tile.icon}}', alt='{{tile.title}}').fa-4x
+                    md-grid-tile-footer
+                        h3 {{tile.title}}
+

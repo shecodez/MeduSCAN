@@ -1,0 +1,40 @@
+//
+   Created by Nicole J. Nobles on 6/1/2016.
+
+section.row(ng-controller='EditProfileController', layout='column')
+    md-content(layout='row',  layout-align='space-around', layout-padding, ng-cloak)
+        md-content(flex, flex-gt-sm='50', flex-gt-md='90')
+            form(name='userProfileForm', data-ng-submit='updateUserProfile(userProfileForm.$valid)', novalidate, autocomplete='off')
+                br
+                alert.text-center.text-success(ng-show='success')
+                    strong Profile Saved Successfully
+                alert.text-center.text-danger(type='danger', ng-show='error')
+                    strong(ng-bind='error')
+
+                md-input-container.md-block
+                    label First Name
+                    input(name='firstName', data-ng-model='user.firstName', required)
+                    div(ng-messages='userProfileForm.firstName.$error', role='alert')
+                        div(ng-message='required') First name is required.
+                md-input-container.md-block
+                    label Last Name
+                    input(name='lastName', data-ng-model='user.lastName', required)
+                    div(ng-messages='userProfileForm.lastName.$error', role='alert')
+                        div(ng-message='required') Last name is required.
+
+                md-input-container.md-block
+                    label Username
+                    input(name='username', data-ng-model='user.username', lowercase, ng-minlength='5', required)
+                    div(ng-messages='userProfileForm.username.$error', role='alert')
+                        div(ng-message='required') Username is required.
+                        div(ng-message='minlength') Username is too short.
+                md-input-container.md-block
+                    label Email (academic)
+                    input(name='email', type='email', data-ng-model='user.email', lowercase, required)
+                    div(ng-messages='userProfileForm.email.$error', role='alert')
+                        div(ng-message='required') Email address required.
+                        div(ng-message='email') Email address invalid.
+
+                br
+                md-button.md-raised.md-primary(type='submit') Save Profile
+

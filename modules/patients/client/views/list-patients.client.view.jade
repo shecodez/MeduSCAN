@@ -1,0 +1,32 @@
+//
+   Created by Nicole J. Nobles on 6/13/2016.
+
+section.container
+    md-content
+        md-card
+            md-toolbar
+                .md-toolbar-tools
+                    h1 Patients
+
+            md-button.md-secondary.md-fab.md-fab-top-right(aria-label='Add', ui-sref='patients.create')
+                md-tooltip(md-direction='right') Add Patient
+                md-icon.md-default-theme.material-icons add
+
+            md-card-content
+                md-list(flex)
+                    md-subheader.md-no-sticky(data-ng-if='vm.patients.length')
+                        span {{vm.patients.length}} Patient(s) Listed
+
+                    md-list-item.md-3-line(data-ng-repeat='patient in vm.patients', data-ui-sref='patients.view({ patientId: patient._id })')
+                        //img.md-avatar(ng-src='{{patient.avatar}}?{{$index}}', alt='Avatar')
+                        .md-list-item-text(layout='column', data-ui-sref='patients.view({ patientId: patient._id })')
+                            h3 {{patient.firstName}} {{patient.lastName}}
+                            h4 ID : {{patient._id}} |&nbsp;
+                                span.primary(ng-if='patient.active') Active
+                                span.yellow(ng-if='!patient.active') Inactive
+                            p: em {{patient.medications.length}} medications - updated {{patient.updated | date:'mediumDate'}}
+
+                .alert.alert-warning.text-center(data-ng-if='vm.patients.$resolved && !vm.patients.length')
+                    | No Patients yet, why don't you
+                    a(data-ui-sref='patients.create')  create one
+                    | ?

@@ -1,0 +1,151 @@
+//
+   Created by Nicole J. Nobles on 6/13/2016.
+
+section.container
+    md-content
+        .page-header
+            h1 {{vm.patient._id ? 'Edit Patient' : 'New Patient'}}
+
+    md-content
+        form(name='vm.form.patientForm', ng-submit='vm.save(vm.form.patientForm.$valid)', novalidate='')
+            .text-center.text-danger(data-ng-show='error')
+                .alert.alert-danger(role='alert')
+                    strong(data-ng-bind='error')
+
+            div(layout='row')
+                md-input-container(flex='50', flex-gt-sm='20')
+                    label Patient Status
+                    md-select(data-ng-model='vm.patient.active')
+                        md-option(ng-repeat='status in vm.statusOpts', ng-value='status.value') {{status.label}}
+
+                md-input-container.md-block(flex)
+                    label ID :&nbsp;
+                        span.primary {{vm.patient._id}}
+                    input(disabled)
+
+            div(layout='row')
+                md-input-container.md-block(flex='20')
+                    label pID
+                    //ng-model='vm.patient.pID'
+                    input(disabled)
+
+                md-input-container(flex='40')
+                    label First Name
+                    input(name='fname', data-ng-model='vm.patient.firstName', required)
+                    div(ng-messages='vm.form.patientForm.fname.$error')
+                        div(ng-message='required') Patient first name required.
+
+                md-input-container(flex='40')
+                    label Last Name
+                    input(name='lname', data-ng-model='vm.patient.lastName', required)
+                    div(ng-messages='vm.form.patientForm.lname.$error')
+                        div(ng-message='required') Patient last name required.
+
+
+
+            div(layout='row')
+                //md-input-container.md-block(flex)
+                    md-radio-button(ng-model='avatar', ng-value='avatarData.value', aria-label='avatarData.title')
+                    md-icon(md-svg-icon='patient.avatar')
+                    md-button(ng-click='') Change Avatar
+                div(layout='row', flex='50')
+                    .md-block(layout='column', flex='70')
+                        //label Dob (MM/DD/YYYY) :
+                        md-datepicker(name='dob', ng-model='vm.patient.dob', md-placeholder='Enter DOB', md-min-date='vm.minDate', md-max-date='vm.maxDate', flex, style='margin: 13px 0;')
+                        .validation-messages(ng-messages='vm.form.patientForm.dob.$error')
+                            //div(ng-message='required') Date of Birth is required.
+                            div(ng-message='minDate') Date is too far back.
+                            div(ng-message='maxDate') Date cannot be later than today.
+                            div(ng-message='valid') The entered value is not a date!
+                    .md-block(layout='column', flex='30')
+                        md-input-container.md-block
+                            label {{vm.calcAge(vm.patient.dob)}} Y
+                            input(disabled)
+
+                div(layout='row', flex='50')
+                    .md-block(layout='column', flex='70')
+                        //label Scenario Time :
+                        mdp-time-picker(name='sTime', ng-model='vm.patient.scenarioTime', required, aria-label='Scenario Time')
+                            div(ng-messages='vm.form.patientForm.sTime.$error')
+                                div(ng-message='required') This is required
+                                div(ng-message='format') Invalid format
+                    .md-block(layout='column', flex='30')
+                        md-input-container.md-block
+                            label ( {{ vm.patient.scenarioTime | date:'HH:mm' }} )
+                            input(disabled)
+
+            div(layout='row')
+                div(flex='50')
+                    .md-block(layout='column', style='margin: 18px 0;')
+                        label Gender:
+                        md-radio-group(ng-model='vm.patient.gender', layout='row')
+                            md-radio-button(value='Male', flex='50', ng-disabled="vm.patient.pregnant===true") Male
+                            md-radio-button(value='Female', flex='50') Female
+
+                    .md-block(layout='column', style='margin: 18px 0;')
+                        label Pregnant:
+                        md-radio-group(ng-model='vm.patient.pregnant', layout='row')
+                            md-radio-button(data-ng-value='false', flex='50') No
+                            md-radio-button(data-ng-value='true', ng-disabled="vm.patient.gender==='Male'", flex='50') Yes
+                div(flex='50')
+                    div(layout='row')
+                        md-input-container.md-block(flex='60')
+                            label Height (CM):
+                            input(name='height', type='number' ng-change='vm.calcFt(vm.patient.height)', data-ng-model='vm.patient.height', ng-pattern='onlyNumbers')
+
+                        md-input-container.md-block(flex='40')
+                            label {{vm.calcFt(vm.patient.height)}}
+                            input(disabled)
+
+                    div(layout='row')
+                        md-input-container.md-block(flex='60')
+                            label Weight (KG):
+                            input(name='weight', type='number', ng-change='vm.calcLb(vm.patient.weight)', data-ng-model='vm.patient.weight', ng-pattern='onlyNumbers')
+
+                        md-input-container.md-block(flex='40')
+                            label {{vm.calcLb(vm.patient.weight)}} lbs
+                            input(disabled)
+
+            md-tabs(md-dynamic-height='', md-border-bottom='', md-stretch-tabs='always')
+                md-tab(label='Alerts')
+                    md-content.md-padding
+                        div(layout='row', layout-wrap flex)
+                            md-checkbox.red(flex='30', ng-model='vm.patient.alert.allergy', aria-label='Allergy', ng-click='vm.patient.alert.allergyDetails = null')
+                                | Allergy
+
+                            md-checkbox.green(flex='30', ng-model='vm.patient.alert.latexAllergy', aria-label='Latex Allergy')
+                                | Latex Allergy
+
+                            md-checkbox.purple(flex='30', ng-model='vm.patient.alert.dnr', aria-label='DNR')
+                                abbr.initialism(title='Do Not Resuscitate') DNR
+
+                            md-checkbox.pink(flex='30', ng-model='vm.patient.alert.restrictedExtremity', aria-label='RE')
+                                abbr.initialism(title='Restricted Extremity') RE
+
+                            md-checkbox.yellow(flex='30', ng-model='vm.patient.alert.fallRisk', aria-label='Fall Risk')
+                                | Fall Risk
+
+                            md-checkbox.black(flex='30', ng-model='vm.patient.alert.other', aria-label='Other', ng-click='vm.patient.alert.otherDetails = null')
+                                | Other
+
+                md-tab(label='Allergies', ng-disabled='!vm.patient.alert.allergy')
+                    md-content.md-padding
+                        md-input-container.md-block
+                            label Allergies:
+                            textarea(data-ng-model='vm.patient.alert.allergyDetails', md-maxlength='128', rows='3', md-select-on-focus='')
+
+                md-tab(label='Notes')
+                    md-content.md-padding
+                        md-input-container.md-block
+                            label Doctor's Note(s):
+                            textarea(data-ng-model='vm.patient.notes', md-maxlength='256', rows='3', md-select-on-focus='')
+
+                md-tab(label='Other', ng-disabled='!vm.patient.alert.other')
+                    md-content.md-padding
+                        md-input-container.md-block
+                            label Other Details
+                            textarea(data-ng-model='vm.patient.alert.otherDetails', md-maxlength='128', rows='3', md-select-on-focus='')
+
+            md-button.md-raised.md-primary(type='submit') {{vm.patient._id ? 'Update' : 'Create'}}
+
+

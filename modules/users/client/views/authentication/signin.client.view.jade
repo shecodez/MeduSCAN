@@ -1,0 +1,43 @@
+//
+   Created by Nicole J. Nobles on 5/23/2016.
+
+div(ng-controller='AuthenticationController')
+    md-content.authForm(layout='row',  layout-align='center-center', layout-padding, ng-cloak)
+        md-card(flex, flex-gt-sm='50', flex-gt-md='33')
+            md-toolbar
+                .md-toolbar-tools
+                    h2 Sign In
+
+            md-card-content
+                //h3.text-center Sign In
+                form.signin(name='signInForm', data-ng-submit='signIn(signInForm.$valid)', novalidate, autocomplete='off')
+                    br
+                    alert.text-center.text-danger(type='danger', ng-show='error')
+                        strong(ng-bind='error')
+
+                    md-input-container.md-block
+                        label Username
+                        md-icon.fa(md-font-icon='fa-user', alt='user').fa-2x
+                        input(name='username', ng-model='credentials.username', lowercase, minlength='5', required)
+                        div(ng-messages='signInForm.username.$error', role='alert')
+                            div(ng-message='required') Username is required.
+                            div(ng-message='minlength') Username is too short.
+
+                    md-input-container.md-block
+                        label Password
+                        md-icon.fa(md-font-icon='fa-key', alt='key').fa-2x
+                        input(name='password', type='password', ng-model='credentials.password', required, placeholder='password')
+                        div(ng-messages='signInForm.password.$error', role='alert')
+                            div(ng-message='required') Password is required.
+
+                    .text-right.forgot-password
+                        a(ui-sref='password.forgot') Forgot your password?
+
+                    br
+                    div(layout='column')
+                        md-button.md-raised.md-primary(type='submit') Sign In
+
+                    .text-center Don't have an account?
+                        a(ui-sref='authentication.signup')  Sign Up
+
+

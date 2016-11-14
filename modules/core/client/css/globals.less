@@ -1,0 +1,124 @@
+@import "variables";
+/*Globals*/
+html, body { height: 100%; width: 100%; margin: 0; }
+// ---- Flex ----------------------------------------
+.site {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.site-content {
+  flex: 1;
+}
+//---------------------------------------------------
+
+// ---- App Colors ----------------------------------
+.primary { color: @primary; }
+.primary-bg { background-color: @primary; }
+.secondary { color: @secondary; }
+.white { color: @white; }
+
+.blue { color: @color1; }
+.lime { color: @color2; }
+.gold { color: @color3; }
+.pink { color: @color4; }
+.aqua { color: @color5; }
+.mint { color: @color6; }
+
+//---------------------------------------------------
+
+// ---- Alert Flag Colors ---------------------------
+.red { color: @red; }
+.yellow { color: @yellow; }
+.pink { color: @pink; }
+.purple { color: @purple; }
+.green { color: @green; }
+.black { color: @black; }
+//---------------------------------------------------
+
+// ---- Background Colors ---------------------------
+
+.bg-white { background-color: @white; }
+.bg-black { background-color: @darker;}
+.bg-light { background-color: @lighter; }
+
+//---------------------------------------------------
+
+// ---- Typography ----------------------------------
+// Fonts
+//@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+// Links
+.active {
+  color: @primary;
+  md-icon {
+    color: @primary;
+  }
+  p {
+    border-right: 5px solid @primary;
+  }
+}
+// Buttons
+// Icons
+/* Rules for sizing the icon. */
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+/* Rules for using icons as black on a light background. */
+//.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+//.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+/* Rules for using icons as white on a dark background. */
+//.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+//.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+//---------------------------------------------------
+
+// ---- Borders -------------------------------------
+.separator {
+  margin: 0 5px;
+  border-right: 1px solid @light;
+}
+//---------------------------------------------------
+
+// ---- Margins -------------------------------------
+.ml-5 { margin-left: 5px; }
+.mr-5 { margin-right: 5px; }
+
+.mt-10 { margin-top:  10px; }
+
+.mt-50 { margin-top: 50px; }
+.mb-50 { margin-bottom: 50px; }
+//---------------------------------------------------
+
+// ---- imgs ----------------------------------------
+//---------------------------------------------------
+
+// ---- Padding -------------------------------------
+//---------------------------------------------------
+
+// ---- Shapes --------------------------------------
+
+// Circle
+// Square / Rectangle
+.tile {
+  .square {
+
+
+    .x2 {}
+  }
+  .rectangle{
+
+
+    .horizontal {}
+    .vertical {}
+  }
+
+}
+// Triangle
+//---------------------------------------------------

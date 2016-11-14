@@ -1,0 +1,35 @@
+//
+   Created by Nicole J. Nobles on 6/18/2016.
+
+md-dialog(aria-label='Subscribers Table', flex='80', flex-gt-sm='50', flex-gt-md='40')
+    md-content
+        md-toolbar
+            .md-toolbar-tools
+                h2 Subscribers
+                span(flex='')
+                md-button.md-icon-button(ng-click='cancel()', aria-label='Close dialog')
+                    md-icon.md-default-theme.material-icons close
+
+        md-dialog-content
+            .md-dialog-content
+                form(name='subsTable')
+                    table.table.table-striped.table-hover(ng-show='subscribers.length')
+                        thead
+                            tr
+                                th Add
+                                th Name
+                                th Email
+                        tbody
+                            tr(ng-repeat='subscriber in subscribers | filter:search')
+                                td: h5
+                                    md-checkbox(ng-model='subscriber.selected', aria-label='selected', ng-disabled='subscriber.isReadOnly')
+                                td: h5 {{subscriber.displayName}}
+                                td: h5.primary {{subscriber.email}}
+
+                .alert.alert-warning.text-center(data-ng-if='!subscribers.length')
+                    | No Subscribers have requested to join this course yet.
+
+        // If anything changed enable this button...
+        md-dialog-actions(layout='row')
+            md-button(ng-click='ok()', ng-disabled='!subsTable.$dirty') Add Selected
+            md-button(ng-click='cancel()', style='margin-right:20px;') Cancel

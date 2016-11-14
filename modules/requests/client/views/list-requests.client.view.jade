@@ -1,0 +1,34 @@
+//
+   Created by Nicole J. Nobles on 6/8/2016.
+
+section.container
+    md-content
+        md-card
+            md-toolbar
+                .md-toolbar-tools
+                    h1 Requests
+
+            md-button.md-secondary.md-fab.md-fab-top-right(aria-label='Add', ui-sref='requests.create')
+                md-tooltip(md-direction='right') Add Request
+                md-icon.md-default-theme.material-icons add
+
+            md-card-content
+                md-list(flex)
+                    md-subheader.md-no-sticky(data-ng-if='vm.requests.length')
+                        span {{vm.requests.length}} Request(s) Listed
+
+                    md-list-item.md-3-line(data-ng-repeat='request in vm.requests', data-ui-sref='requests.view({ requestId: request._id })')
+                        .md-list-item-text(layout='column', data-ui-sref='requests.view({ requestId: request._id })')
+                            h3 {{request.subject_id}} | {{request.type}}
+                            h4 ID : {{request._id}}
+                            p: em {{request.subscribers.length}} Subscribers --
+                                |  {{request.created | date:'mediumDate'}} :&nbsp;
+                                span(data-ng-if='request.user', data-ng-bind='request.user.displayName')
+                                span(data-ng-if='!request.user') Deleted User
+
+
+                .alert.alert-warning.text-center(data-ng-if='vm.requests.$resolved && !vm.requests.length')
+                    | No Requests yet, why don't you
+                    a(data-ui-sref='requests.create')  create one
+                    | ?
+

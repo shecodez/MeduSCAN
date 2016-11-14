@@ -1,0 +1,34 @@
+//
+   Created by Nicole J. Nobles on 6/14/2016.
+
+section.container
+    md-content
+        md-card
+            md-toolbar
+                .md-toolbar-tools
+                    h1 Medications
+
+            md-button.md-secondary.md-fab.md-fab-top-right(aria-label='Add', ui-sref='medications.create')
+                md-tooltip(md-direction='right') Add Medication
+                md-icon.md-default-theme.material-icons add
+
+            md-card-content
+                //md-content
+                md-list(flex)
+                    md-subheader.md-no-sticky(data-ng-if='vm.medications.length')
+                        span {{vm.medications.length}} Medication(s) Listed
+
+                    md-list-item.md-3-line(data-ng-repeat='medication in vm.medications', data-ui-sref='medications.view({ medicationId: medication._id })')
+                        //img.md-avatar(ng-src='{{medication.avatar}}?{{$index}}', alt='Avatar')
+                        .md-list-item-text(layout='column', data-ui-sref='medications.view({ medicationId: medication._id })')
+                            h3 {{medication.name}}
+                                small: em  {{medication.type}}
+                            h5 ID : {{medication._id}} |&nbsp;
+                                span.primary(ng-if='medication.active') Active
+                                span.yellow(ng-if='!medication.active') Inactive
+                            p: em {{medication.amount}} : {{medication.strength}} {{medication.unit}} {{medication.form}}
+
+                .alert.alert-warning.text-center(data-ng-if='vm.medications.$resolved && !vm.medications.length')
+                    | No Medications yet, why don't you
+                    a(data-ui-sref='medications.create')  create one
+                    | ?

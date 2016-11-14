@@ -1,0 +1,41 @@
+//
+   Created by Nicole J. Nobles on 5/28/2016.
+
+section
+    md-content.authForm(layout='row',  layout-align='space-around', layout-padding, ng-cloak)
+        md-card(flex, flex-gt-sm='50', flex-gt-md='33')
+            md-toolbar
+                .md-toolbar-tools
+                    h2
+                        | User :&nbsp;
+                        span(ng-bind='user.username')
+
+            md-card-content
+                //h3.text-center Sign In
+                form(name='userForm', data-ng-submit='update(userForm.$valid)', novalidate)
+                    br
+                    alert.text-center.text-danger(type='danger', ng-show='error')
+                        span(ng-bind='error')
+
+                    md-input-container.md-block
+                        label First Name
+                        input(name='firstName', ng-model='user.firstName', required)
+                        div(ng-messages='userForm.firstName.$error', role='alert')
+                            div(ng-message='required') First name is required.
+
+                    md-input-container.md-block
+                        label Last Name
+                        input(name='lastName', ng-model='user.lastName', required)
+                        div(ng-messages='userForm.lastName.$error', role='alert')
+                            div(ng-message='required') Last name is required.
+
+                    md-input-container.md-block
+                        label Roles
+                        input(name='roles', data-ng-model='user.roles', required)
+                        div(ng-messages='userForm.roles.$error', role='alert')
+                            div(ng-message='required') At least one role is required.
+
+                    br
+                    div(layout='column')
+                        md-button.md-raised.md-primary(type='submit' flex) Update
+

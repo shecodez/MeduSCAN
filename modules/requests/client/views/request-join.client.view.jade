@@ -1,0 +1,27 @@
+//
+   Created by Nicole J. Nobles on 6/8/2016.
+
+div(flex layout-fill layout='row')
+    md-content.authForm(layout='row', layout-align='center-center', layout-padding, ng-cloak, flex)
+        md-card(flex, flex-gt-sm='50', flex-gt-md='33')
+            md-toolbar
+                .md-toolbar-tools
+                    h2 Request Join
+            md-card-content
+                form(name='vm.form.requestJForm', data-ng-submit='vm.lookupRequestId(vm.form.requestJForm.$valid)', novalidate='true', autocomplete='off')
+                    br
+                    alert.text-center.text-danger(type='danger', ng-show='vm.error')
+                        strong(ng-bind='vm.error')
+                    h4.text-center Enter the ID you received from your Instructor / Admin.
+                    br
+                    md-input-container.md-block
+                        label Enter ID
+                        input(name='requestId', ng-model='vm.requestId', required, lowercase, md-maxlength='24', minlength='24')
+                        div(ng-messages='vm.form.requestJForm.requestId.$error', role='alert')
+                            div(ng-message='required') ID is required.
+                            div(ng-message='md-maxlength') ID is too long.
+                            div(ng-message='minlength') ID is too short.
+                    br
+                    .text-center
+                        md-button.md-raised.md-primary(type='submit') Continue
+

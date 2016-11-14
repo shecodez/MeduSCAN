@@ -1,0 +1,63 @@
+//
+   Created by Nicole J. Nobles on 6/17/2016.
+
+section(flex layout-fill layout='row')
+    md-content.authForm(layout='row',  layout-align='center-center', layout-padding, ng-cloak flex)
+        md-card(flex, flex-gt-sm='50', flex-gt-md='45')
+            md-toolbar
+                .md-toolbar-tools
+                    h2 {{vm.key._id ? 'Edit Key' : 'New Key'}}
+
+            md-card-content
+                form(name='vm.form.keyForm', ng-submit='vm.save(vm.form.keyForm.$valid)', novalidate='')
+                    br
+                    alert.text-center.text-danger(type='danger', ng-show='vm.error')
+                        span(ng-bind='vm.error')
+
+                    div(layout='row')
+                        md-input-container(flex='50', flex-gt-sm='35')
+                            label Key Status
+                            md-select(ng-model='vm.key.active')
+                                md-option(ng-repeat='opt in vm.statusOpts', ng-value='opt.value') {{opt.label}}
+
+                        //md-input-container(flex)
+                            label Upgraded:
+                            md-radio-group(ng-model='vm.key.upgraded', layout='row')
+                                md-radio-button(data-ng-value='true',  flex='50') Yes
+                                md-radio-button(data-ng-value='false', flex='50') No
+
+                    div(layout='row')
+                        md-input-container.md-block(flex='70')
+                            label Owner
+                            input(name='registeredTo', ng-model='vm.key.registeredTo', required)
+                            div(ng-messages='vm.form.keyForm.registeredTo.$error', role='alert')
+                                div(ng-message='required') Who the key is registered to is required.
+
+                        md-input-container.md-block(flex='30')
+                            label Type
+                            md-select(ng-model='vm.key.type', required)
+                                md-option(ng-repeat='opt in vm.keyTypeOpts', ng-value='opt.value') {{opt.value}}
+                            div(ng-messages='vm.form.keyForm.type.$error', role='alert')
+                                div(ng-message='required') Key type is required.
+
+                    div(layout='row', layout-xs='column', layout-padding)
+                        div(flex='50')
+                            label Activation Date:
+                            md-datepicker(name='activationDate', ng-model='vm.key.activationDate', md-placeholder='Enter date', md-max-date='vm.key.expirationDate', required)
+                            .validation-messages(ng-messages='vm.form.keyForm.activationDate.$error', role='alert')
+                                div(ng-message='required') Key activation date is required.
+                                div(ng-message='maxdate') Date cannot be later than expiration Date.
+                                div(ng-message='valid') The entered value is not a date!
+
+                        div(flex='50')
+                            label Expiration Date:
+                            md-datepicker(name='expirationDate', ng-model='vm.key.expirationDate', md-placeholder='Enter date', md-min-date='vm.key.activationDate', required)
+                            .validation-messages(ng-messages='vm.form.keyForm.expirationDate.$error', role='alert')
+                                div(ng-message='required') Key expiration date is required.
+                                div(ng-message='mindate') Date cannot be earlier than activation date.
+                                div(ng-message='valid') The entered value is not a date!
+
+                    br
+                    div(layout='column')
+                        md-button.md-raised.md-primary(type='submit') {{vm.key._id ? 'Update' : 'Create'}}
+

@@ -1,0 +1,94 @@
+//
+   Created by Nicole J. Nobles on 6/14/2016.
+
+section.container
+    .page-header
+        h1 {{vm.patient.firstName}} {{vm.patient.lastName}}
+        small Patient ID : {{vm.patient._id}}
+    .pull-left
+        h3(style='margin-top: 0') Status :&nbsp;
+            span.primary(ng-if='vm.patient.active') Active
+            span.yellow(ng-if='!vm.patient.active') Inactive
+
+    .pull-right(data-ng-show='vm.patient.isCurrentUserOwner')
+        a.btn.btn-info(title='Print', data-ng-click='vm.printBarcode(vm.patient)')
+            i.fa.fa-print
+        a.btn.btn-warning(title='Edit', data-ui-sref='patients.edit({ patientId: vm.patient._id })')
+            i.fa.fa-edit
+        a.btn.btn-danger(title='Delete', data-ng-click='vm.remove()')
+            i.fa.fa-trash
+
+    .clearfix
+    .text-center
+        md-button.md-raised.md-primary(data-ui-sref='patients.list') Go back to patients
+    br
+    .well
+        div(layout='row', layout-xs='column', layout-sm='column', layout-margin).bg-white
+            .md-block(flex='40', flex-md='50')
+                h3: io-barcode(code='{{vm.patient._id}}', type='CODE128B', options='vm.bcOpts')
+
+            .md-block(flex)
+                h4 {{vm.patient.lastName}} , {{vm.patient.firstName}}
+                p DOB:&nbsp;
+                    span(data-ng-bind="vm.patient.dob | date:'mediumDate'")
+                p {{vm.calcAge(vm.patient.dob)}}Y/{{vm.patient.gender}}&nbsp;
+                    span(ng-if='vm.patient.pregnant') Pregnant
+
+            .md-block(flex='20', flex-sm='40', flex-xs='50')
+                h4: small: em Updated :&nbsp;
+                    span(data-ng-bind="vm.patient.updated | date:'mediumDate'")
+
+    br
+    div(layout='column', layout-gt-md='row')
+        .md-block(flex='20', layout-margin)
+            md-button.md-raised.md-accent(data-ui-sref='patients.medications({ patientId: vm.patient._id })') View Patient Medications
+
+        .md-block(flex='60', layout-margin)
+            md-tabs.md-primary(md-dynamic-height='', md-border-bottom='', md-stretch-tabs='always')
+                md-tab(label='Alerts')
+                    md-content.md-padding
+                        div(layout='row', layout-wrap flex)
+                            md-checkbox.red(flex='30', ng-model='vm.patient.alert.allergy', aria-label='Allergy', ng-click='vm.patient.alert.allergyDetails = null')
+                                | Allergy
+                            md-checkbox.green(flex='30', ng-model='vm.patient.alert.latexAllergy', aria-label='Latex Allergy')
+                                | Latex Allergy
+                            md-checkbox.purple(flex='30', ng-model='vm.patient.alert.dnr', aria-label='DNR')
+                                abbr.initialism(title='Do Not Resuscitate') DNR
+                            md-checkbox.pink(flex='30', ng-model='vm.patient.alert.restrictedExtremity', aria-label='RE')
+                                abbr.initialism(title='Restricted Extremity') RE
+                            md-checkbox.yellow(flex='30', ng-model='vm.patient.alert.fallRisk', aria-label='Fall Risk')
+                                | Fall Risk
+                            md-checkbox.black(flex='30', ng-model='vm.patient.alert.other', aria-label='Other', ng-click='vm.patient.alert.otherDetails = null')
+                                | Other
+                md-tab(label='Allergies', ng-disabled='!vm.patient.alert.allergy')
+                    md-content.md-padding
+                        md-input-container.md-block
+                            label Allergies:
+                            textarea(data-ng-model='vm.patient.alert.allergyDetails', md-maxlength='128', rows='3', md-select-on-focus='')
+                md-tab(label='Notes')
+                    md-content.md-padding
+                        md-input-container.md-block
+                            label Doctor's Note(s):
+                            textarea(data-ng-model='vm.patient.notes', md-maxlength='256', rows='3', md-select-on-focus='')
+                md-tab(label='Other', ng-disabled='!vm.patient.alert.other')
+                    md-content.md-padding
+                        md-input-container.md-block
+                            label Other Details
+                            textarea(data-ng-model='vm.patient.alert.otherDetails', md-maxlength='128', rows='3', md-select-on-focus='')
+
+        .md-block(flex='20', layout-margin)
+            h4 Height: {{vm.patient.height}} CM
+            h4 Weight: {{vm.patient.weight}} KG
+            br
+            h4 BMI: {{vm.calcBMI(vm.patient.weight, vm.patient.height)}} / {{vm.textBMI(vm.bmi)}}
+
+    small
+        em.text-muted
+            | Created on&nbsp;
+            span(data-ng-bind="vm.patient.created | date:'mediumDate'")
+            |  by&nbsp;
+            span(data-ng-if='vm.patient.user', data-ng-bind='vm.patient.user.displayName')
+            span(data-ng-if='!vm.patient.user') Deleted User
+
+
+    //p.lead(data-ng-bind='vm.patient.content')

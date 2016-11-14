@@ -1,0 +1,133 @@
+/* variables */
+/*Globals*/
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+.site {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+.site-content {
+  flex: 1;
+}
+.primary {
+  color: #00bcd4;
+}
+.primary-bg {
+  background-color: #00bcd4;
+}
+.secondary {
+  color: #fda626;
+}
+.white {
+  color: #ffffff;
+}
+.blue {
+  color: #507996;
+}
+.lime {
+  color: #58a188;
+}
+.gold {
+  color: #da991a;
+}
+.pink {
+  color: #c3425e;
+}
+.aqua {
+  color: #d3cc7f;
+}
+.mint {
+  color: #7cbcac;
+}
+.red {
+  color: #ff0000;
+}
+.yellow {
+  color: #ffcc00;
+}
+.pink {
+  color: #ff0066;
+}
+.purple {
+  color: #9900ff;
+}
+.green {
+  color: #009999;
+}
+.black {
+  color: #000000;
+}
+.bg-white {
+  background-color: #ffffff;
+}
+.bg-black {
+  background-color: #222222;
+}
+.bg-light {
+  background-color: #dddddd;
+}
+.active {
+  color: #00bcd4;
+}
+.active md-icon {
+  color: #00bcd4;
+}
+.active p {
+  border-right: 5px solid #00bcd4;
+}
+/* Rules for sizing the icon. */
+.material-icons.md-18 {
+  font-size: 18px;
+}
+.material-icons.md-24 {
+  font-size: 24px;
+}
+.material-icons.md-36 {
+  font-size: 36px;
+}
+.material-icons.md-48 {
+  font-size: 48px;
+}
+/* Rules for using icons as black on a light background. */
+/* Rules for using icons as white on a dark background. */
+.separator {
+  margin: 0 5px;
+  border-right: 1px solid #aaaaaa;
+}
+.ml-5 {
+  margin-left: 5px;
+}
+.mr-5 {
+  margin-right: 5px;
+}
+.mt-10 {
+  margin-top: 10px;
+}
+.mt-50 {
+  margin-top: 50px;
+}
+.mb-50 {
+  margin-bottom: 50px;
+}
+.notes {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+.notes h3 {
+  border-bottom: 1px solid #aaaaaa;
+}
+.pl-8 {
+  padding-left: 8px !important;
+}
+.mt-25 {
+  margin-top: 25px;
+}

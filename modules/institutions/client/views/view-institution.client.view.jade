@@ -1,0 +1,89 @@
+//
+   Created by Nicole J. Nobles on 6/17/2016.
+
+section.container
+    .page-header
+        h1(data-ng-bind='vm.institution.name')
+        small Institution ID: {{vm.institution._id}}
+
+    .pull-left
+        h3(style='margin-top: 0') Institution :&nbsp;
+            span(ng-if='vm.institution.active').text-success Active
+            span(ng-if='!vm.institution.active').text-danger Inactive
+
+    .pull-right(data-ng-show='vm.institution.isCurrentUserOwner')
+        md-button(ng-if='vm.institution.active && !vm.exist(vm.institution.request)', ng-click='vm.createRequest()').md-primary.md-raised Generate Join Institution ID
+        md-button(ng-if='!vm.institution.active', ng-disabled='true').md-raised Generate Join Institution ID
+        a.btn.btn-warning(data-ui-sref='institutions.edit({ institutionId: vm.institution._id })')
+            i.fa.fa-edit
+        a.btn.btn-danger(data-ng-click='vm.remove()')
+            i.fa.fa-trash
+
+    .clearfix
+    p.lead School Code: {{vm.institution.ceebCode}}
+
+    h4.text-center
+        i.material-icons public
+        span: a(href='https://{{vm.institution.website}}', target='_blank')  {{vm.institution.website}}
+
+        br
+        i.material-icons phone
+        |  {{vm.institution.phone}}
+
+        br
+        i.material-icons place
+        |  {{vm.institution.address.street}}
+        br
+        | {{vm.institution.address.city}}, {{vm.institution.address.state}} {{vm.institution.address.zip}}
+
+    .text-right
+        small
+            em.text-muted
+                | Posted on&nbsp;
+                span(data-ng-bind="vm.institution.created | date:'mediumDate'")
+                |  by :&nbsp;
+                span(data-ng-if='vm.institution.user', data-ng-bind='vm.institution.user.displayName')
+                span(data-ng-if='!vm.institution.user') Deleted User
+
+
+    md-content
+        md-tabs.md-primary(md-stretch-tabs='always', style='min-height: 450px')
+            md-tab(label='teachers', aria-controls='tab1-content')
+
+                div(data-ng-show='vm.institution.isCurrentUserOwner')
+                    md-button.md-secondary.md-fab.md-fab-top-right(ng-if='vm.institution.active && vm.exist(vm.institution.request)',
+                            aria-label='Add', ng-click='vm.openSubscribersDialog()')
+                        md-tooltip(md-direction='right') Add Teacher
+                        md-icon.md-default-theme.material-icons add
+
+                .alert.text-center.text-danger(type='danger', ng-show='vm.error')
+                    span(ng-bind='vm.error')
+                .text-center
+                    h3(ng-if='vm.exist(vm.institution.request)')
+                        | Join Institution ID :&nbsp;
+                        span.primary {{vm.institution.request._id}}
+
+                table.table.table-striped.table-hover(ng-show='vm.institution.teachers.length')
+                    thead
+                        tr
+                            th Name
+                            th Email
+                            th Status
+                    tbody
+                        tr(ng-repeat='teacher in vm.institutionTeachers | filter:search')
+                            td: h5 {{teacher._id.displayName}}
+                            td: h5: a(href='mailto:{{teacher._id.email}}') {{teacher._id.email}}
+                            td
+                                md-select(ng-model='teacher.status', style='margin: 0;', aria-label='subscriber', ng-change='teacher.statusUnchanged = false')
+                                    md-option(ng-repeat='opt in vm.teacherStatusOpts', ng-value='opt.value') {{opt.value}}
+
+                            td.text-center
+                                md-button.md-icon-button.md-primary(ng-click='vm.updateTeacherStatus(teacher, $index)', ng-disabled='teacher.statusUnchanged')
+                                    md-tooltip(md-direction='top') Update Teacher Status
+                                    md-icon.md-default-theme.material-icons update
+
+                                md-button.md-icon-button.md-warn(ng-click='vm.removeTeacher($index)')
+                                    md-tooltip(md-direction='right') Remove Teacher
+                                    md-icon.md-default-theme.material-icons highlight_off
+
+

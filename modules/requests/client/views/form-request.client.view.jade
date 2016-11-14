@@ -1,0 +1,33 @@
+//
+   Created by Nicole J. Nobles on 6/8/2016.
+
+section(flex layout-fill layout='row')
+    md-content.authForm(layout='row',  layout-align='center-center', layout-padding, ng-cloak flex)
+        md-card(flex, flex-gt-sm='50', flex-gt-md='33')
+            md-toolbar
+                .md-toolbar-tools
+                    h2 {{vm.request._id ? 'Edit Request' : 'New Request'}}
+
+            md-card-content
+                form(name='vm.form.requestForm', ng-submit='vm.save(vm.form.requestForm.$valid)', novalidate)
+                    br
+                    alert.text-center.text-danger(type='danger', ng-show='vm.error')
+                        span(ng-bind='vm.error')
+
+                    md-input-container(flex='30', style='padding-bottom: 24px;').md-block
+                        label Type
+                        md-select(ng-model='vm.request.type', required)
+                            md-option(ng-repeat='opt in vm.requestTypeOpts', ng-value='opt.value') {{opt.value}}
+                        div(ng-messages='vm.form.requestForm.type.$error', role='alert')
+                            div(ng-message='required') Request type is required.
+
+                    md-input-container.md-block
+                        label Subject ID
+                        input(name='subject_id', ng-model='vm.request.subject_id', required)
+                        div(ng-messages='vm.form.requestForm.subject_id.$error', role='alert')
+                            div(ng-message='required') Subject ID of request is required.
+
+                    br
+                    div(layout='column')
+                        md-button.md-raised.md-primary(type='submit') {{vm.request._id ? 'Update' : 'Create'}}
+

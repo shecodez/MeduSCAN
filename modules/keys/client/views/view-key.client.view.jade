@@ -1,0 +1,41 @@
+//
+   Created by Nicole J. Nobles on 6/17/2016.
+
+section.container
+    .page-header
+        h1(data-ng-bind='vm.key.type')
+        small Key ID : {{vm.key._id}}
+
+    .pull-left
+        h3(style='margin-top: 0') Key :&nbsp;
+            span(ng-if='vm.key.active').text-success Active
+            span(ng-if='!vm.key.active').text-danger Inactive
+
+    .pull-right(data-ng-show='vm.key.isCurrentUserOwner')
+        a.btn.btn-warning(data-ui-sref='keys.edit({ keyId: vm.key._id })')
+            i.fa.fa-edit
+        a.btn.btn-danger(data-ng-click='vm.remove()')
+            i.fa.fa-trash
+
+    .clearfix
+    .text-center
+        h3 Key Registered to : {{vm.key.registeredTo}} | {{vm.key.type}}
+        // Include owner info? (i.e. name, email, course._id/institution._id)
+        h4
+            i.material-icons date_range
+            |  {{vm.key.activationDate | date:'mediumDate'}} - {{vm.key.expirationDate | date:'mediumDate'}}
+        h3 Upgraded?
+            span.primary  {{vm.key.upgraded}}
+
+        br
+        h4 Beta Testers : {{vm.key.betaTesters}}
+
+    .text-right
+        small
+            em.text-muted
+                | Created on&nbsp;
+                span(data-ng-bind="vm.key.created | date:'mediumDate'")
+                |  by :&nbsp;
+                span(data-ng-if='vm.key.user', data-ng-bind='vm.key.user.displayName')
+                span(data-ng-if='!vm.key.user') Deleted User
+

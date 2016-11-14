@@ -1,0 +1,77 @@
+<div data-ng-controller="HeaderController as vm" flex>
+  <md-toolbar>
+    <div class="container" layout="row" layout-align="space-around center">
+      <md-button class="md-icon-button" ng-click="vm.toggleMenu()" aria-label="Menu">
+        <i class="material-icons">menu</i>
+      </md-button>
+      <h2 class="md-toolbar-tools"><a data-ui-sref="home">MeduSCAN</a></h2>
+
+      <span layout="row" ng-hide="vm.authentication.user" hide-xs>
+        <md-button ui-sref="authentication.signup" aria-label="Sign Up">Sign Up</md-button>
+        <md-button ui-sref="authentication.signin" aria-label="Sign In">Sign In</md-button>
+      </span>
+
+      <span layout="row" ng-show="vm.authentication.user">
+        <md-menu>
+          <md-button aria-label="Profile Button" ng-click="vm.openProfileMenu($mdOpenMenu, $event)" class="md-icon-button">
+            <img ng-src="{{vm.authentication.user.profileImageURL}}" alt="{{vm.authentication.user.displayName}}" class="header-profile-image" />
+          </md-button>
+          <md-menu-content>
+            <md-subheader class="md-no-sticky">{{vm.authentication.user.email}}</md-subheader>
+            <md-menu-item>
+              <md-button ui-sref="settings.profile" ui-sref-active="active">
+                <md-icon class="md-default-theme material-icons">account_circle</md-icon>
+                Edit Profile
+              </md-button>
+            </md-menu-item>
+            <md-menu-item ui-sref="settings.picture" ui-sref-active="active">
+              <md-button>
+                <md-icon class="md-default-theme material-icons">camera</md-icon>
+                Change Profile Picture
+              </md-button>
+            </md-menu-item>
+            <md-menu-item ui-sref="settings.password" ui-sref-active="active">
+              <md-button>
+                <md-icon class="md-default-theme material-icons">lock</md-icon>
+                Change Password
+              </md-button>
+            </md-menu-item>
+            <md-menu-item ui-sref="settings.account" ui-sref-active="active">
+              <md-button>
+                <md-icon class="md-default-theme material-icons">web</md-icon>
+                Manage Account
+              </md-button>
+            </md-menu-item>
+            <!--<md-menu-item ui-sref="dashboard" ui-sref-active="active">
+              <md-button ng-disabled="vm.role === 'user' || vm.role === 'guest'">
+                <md-icon class="md-default-theme material-icons">dashboard</md-icon>
+                Dashboard
+              </md-button>
+            </md-menu-item>-->
+            <md-menu-item ui-sref="forums" ui-sref-active="active">
+              <md-button ng-disabled="true">
+                <md-icon class="md-default-theme material-icons">public</md-icon>
+                Community Forums
+              </md-button>
+            </md-menu-item>
+            <md-menu-divider></md-menu-divider>
+            <md-menu-item>
+              <md-button>
+                <md-icon class="md-default-theme material-icons">exit_to_app</md-icon>
+                <a href="/api/auth/signout" target="_self">Sign Out</a>
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+      </span>
+
+    </div>
+  </md-toolbar>
+</div>
+
+<div data-ng-controller="HeaderController as vm">
+  <md-sidenav md-component-id="menu" class="md-sidenav-menu md-whiteframe-z2">
+    <nav data-ng-include="'/modules/core/client/views/partials/side-nav.client.view.html'" flex layout-fill></nav>
+  </md-sidenav>
+</div>
+

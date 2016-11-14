@@ -1,0 +1,17 @@
+//
+   Created by Nicole J. Nobles on 6/20/2016.
+
+md-dialog(aria-label='', flex='80')
+    md-content
+        md-toolbar
+            .md-toolbar-tools
+                h2
+                span(flex='')
+                md-button.md-icon-button(ng-click='cancel()', aria-label='Close dialog')
+                    md-icon.md-default-theme.material-icons close
+
+        md-dialog-content
+            .md-dialog-content
+        md-dialog-actions(layout='row')
+            md-button(ng-click='ok()') Ok
+            md-button(ng-click='cancel()') Cancel

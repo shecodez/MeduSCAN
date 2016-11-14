@@ -1,0 +1,35 @@
+//
+   Created by Nicole J. Nobles on 6/8/2016.
+
+section(flex layout-fill layout='row')
+    md-content(layout='row',  layout-align='center-center', layout-padding, ng-cloak flex)
+        md-content(flex, flex-gt-sm='50', flex-gt-md='60')
+            .page-header
+                h2 {{vm.blog._id ? 'Edit Blog' : 'New Blog'}}
+
+            form(name='vm.form.blogForm', ng-submit='vm.save(vm.form.blogForm.$valid)', novalidate='')
+                .text-danger(ng-show='vm.error')
+                    .alert.alert-danger(role='alert')
+                        strong(ng-bind='vm.error')
+
+                br
+                div(layout='row', layout-xs='column')
+                    div(flex)
+                        md-input-container.md-block
+                            label Category
+                            input(name='category', ng-model='vm.blog.category')
+                    div(flex)
+                        md-input-container.md-block
+                            label Title
+                            input(name='title', ng-model='vm.blog.title', required)
+                            div(ng-messages='vm.form.blogForm.title.$error', role='alert')
+                                div(ng-message='required') Blog title is required.
+                br
+                md-input-container.md-block
+                    label Content
+                    textarea(ng-model='vm.blog.content', rows='15', md-select-on-focus='', required)
+                    div(ng-messages='vm.form.blogForm.content.$error', role='alert')
+                        div(ng-message='required') Blog content is required.
+
+                md-button.md-raised.md-primary(type='submit') {{vm.blog._id ? 'Update' : 'Create'}}
+
