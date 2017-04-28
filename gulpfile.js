@@ -42,6 +42,11 @@ gulp.task('env:prod', function () {
   process.env.NODE_ENV = 'production';
 });
 
+// Heroku production task
+gulp.task('heroku:production', function(){
+  runSequence('clean', 'build', 'minify')
+});
+
 // Nodemon task
 gulp.task('nodemon', function () {
   return plugins.nodemon({
