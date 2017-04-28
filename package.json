@@ -24,9 +24,22 @@
     "npm": ">=3.9.2"
   },
   "scripts": {
-    "start": "node server.js",
-    "test": "grunt test",
-    "postinstall": "bower install --config.interactive=false"
+    "update": "npm update && npm prune && bower install --allow-root && bower prune --allow-root",
+    "clean": "rm -rf node_modules/ public/lib/",
+    "reinstall": "npm cache clean && npm run clean && npm install",
+    "start": "gulp",
+    "start:prod": "gulp prod",
+    "start:debug": "node-debug --web-host 0.0.0.0 server.js & gulp debug",
+    "gulp": "gulp",
+    "lint": "gulp lint",
+    "test": "gulp test",
+    "test:server": "gulp test:server",
+    "test:server:watch": "gulp test:server:watch",
+    "test:client": "gulp test:client",
+    "test:e2e": "gulp test:e2e",
+    "test:coverage": "gulp test:coverage",
+    "postinstall": "bower install --allow-root && bower prune --allow-root",
+    "generate-ssl-certs": "scripts/generate-ssl-certs.sh"
   },
   "dependencies": {
     "acl": "~0.4.9",
