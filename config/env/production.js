@@ -12,7 +12,7 @@ module.exports = {
   host: process.env.HOST || '0.0.0.0',
   db: {
     //uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/mean',
-    uri: process.env.MONGOLAB_URI,
+    uri: process.env.MONGODB_URI,
     options: {
       user: '',
       pass: ''
