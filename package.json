@@ -29,8 +29,7 @@
     "reinstall": "npm cache clean && npm run clean && npm install",
     "start": "server.js",
     "heroku-postbuild": "gulp",
-    "start:prod": "gulp prod",
-    "start:debug": "node-debug --web-host 0.0.0.0 server.js & gulp debug",
+
     "gulp": "gulp",
     "lint": "gulp lint",
     "test": "gulp test",
