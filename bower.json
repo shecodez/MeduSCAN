@@ -1,5 +1,6 @@
 {
   "name": "meduscan",
+  "version": "1.0.0",
   "description": "BCMA training software - A Full-Stack JavaScript Web App powered by MongoDB, ExpressJS, AngularJS, and NodeJS.",
   "homepage": "http://www.meduscan.com/",
   "dependencies": {
