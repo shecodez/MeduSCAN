@@ -38,7 +38,7 @@
     "test:client": "gulp test:client",
     "test:e2e": "gulp test:e2e",
     "test:coverage": "gulp test:coverage",
-    "postinstall": "bower install && grunt build",
+    "postinstall": "bower install && gulp",
     "generate-ssl-certs": "scripts/generate-ssl-certs.sh"
   },
   "dependencies": {
